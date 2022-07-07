@@ -9,8 +9,6 @@ const User=require("./models/users");
 
 const passportLocalMongoose=require("passport-local-mongoose");
 
-require("./config/passport")(passport);
-
 const app=express();
 
 mongoose.connect(process.env.MONGO_CONNECT,{useNewUrlParser:true});
@@ -19,17 +17,18 @@ app.use(session({
     secret:process.env.TOKEN,
     resave:false,
     saveUninitialized:true,
-    cookie:{secure:true}
+    
 }))
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+require("./config/passport")(passport);
 
 
 app.get("/",function(req,res)
 {
+    console.log(req.session.cookie);
     res.send("Home page");
 });
 

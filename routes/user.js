@@ -19,6 +19,27 @@ router.get("/register",function(req,res)
     res.send("This is the registeration page");
 });
 
+
+router.get("/dashboard",function(req,res)
+{
+    if(req.isAuthenticated())
+    {
+        res.send("Welcome to dashboard")
+    }
+    else
+    {
+        res.redirect("/login");
+    }
+})
+
+router.get("/logout",function(req,res)
+{
+    req.logout(function(err){});
+
+    res.redirect("/register");
+})
+
+
 router.post("/register",function(req,res)
 {
     User.register({username:req.body.username},req.body.password,function(err,user)
@@ -30,8 +51,7 @@ router.post("/register",function(req,res)
         }
         else
         {
-          passport.authenticate("local")(req,res,function(){
-            res.redirect("/login")})
+            res.redirect("/login");
         }
     })
 })
@@ -57,6 +77,5 @@ router.post("/login",function(req,res)
         }
     })
 })
-
 
 module.exports=router;
