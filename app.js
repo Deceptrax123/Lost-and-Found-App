@@ -3,6 +3,7 @@ require('dotenv').config();
 const express=require("express");
 const mongoose=require("mongoose");
 const user=require("./routes/user");
+const dashboard=require("./routes/dashboard");
 const session=require("express-session");
 const passport=require("passport");
 const User=require("./models/users");
@@ -32,7 +33,8 @@ app.get("/",function(req,res)
     res.send("Home page");
 });
 
-app.use("/",user);
+app.use("/users",user);
+app.use("/users/dashboard",dashboard);
 
 app.listen(process.env.PORT,function()
 {

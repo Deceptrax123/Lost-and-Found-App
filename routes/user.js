@@ -29,7 +29,7 @@ router.get("/dashboard",function(req,res)
     }
     else
     {
-        res.redirect("/login");
+        res.redirect("/users/login");
     }
 })
 
@@ -37,7 +37,7 @@ router.get("/logout",function(req,res)
 {
     req.logout(function(err){});
 
-    res.redirect("/register");
+    res.redirect("/users/register");
 })
 
 
@@ -45,37 +45,44 @@ router.post("/register",async function(req,res)
 {
     try
     {
-        let reg=await User.register({username: req.body.username,email: req.body.email,dob:req.body.dob,contact:req.body.contact},req.body.password);
+        await User.register({username: req.body.username,email: req.body.email,dob:req.body.dob,contact:req.body.contact},req.body.password);
 
-        res.redirect("/login");
+        res.redirect("/users/login");
     }catch(err)
     {
         console.log(err);
-        res.redirect("/register");
+        res.redirect("/users/register");
        
     }
 
 });
-router.post("/login",function(req,res)
-{
-    const user=new User({
-        username:req.body.username,
-        password:req.body.password
-    })
 
-    req.login(user,function(err)
-    {
-        if(err)
-        {
-            console.log(err);
-        }
-        else
-        {
-            passport.authenticate("local")(req,res,function(){
-                res.redirect("/dashboard");
+
+router.post("/login",async function(req,res)
+{
+    try{
+        const user=await User.findOne({username:req.body.username})
+
+        if(user){
+            req.login(user,function(err)
+            {
+                if(err)
+                {
+                    console.log(err);
+                    res.redirect("/users/login");
+                }
+                else
+                {
+                    passport.authenticate("local")(req,res,function(){
+                        res.redirect("/users/dashboard");
+                    })
+                }
             })
         }
-    })
+    }catch(err)
+    {
+        console.log(err);
+        res.redirect("/users/login");
+    }
 })
-
 module.exports=router;
