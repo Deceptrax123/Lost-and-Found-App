@@ -6,6 +6,7 @@ const passport=require("passport");
 const User=require("../models/users");
 
 
+
 router.use(bodyParser.urlencoded({extended:true}));
 
 
@@ -40,22 +41,21 @@ router.get("/logout",function(req,res)
 })
 
 
-router.post("/register",function(req,res)
+router.post("/register",async function(req,res)
 {
-    User.register({username:req.body.username},req.body.password,function(err,user)
+    try
     {
-        if(err)
-        {
-            console.log(err);
-            res.redirect("/register");
-        }
-        else
-        {
-            res.redirect("/login");
-        }
-    })
-})
+        let reg=await User.register({username: req.body.username,email: req.body.email,dob:req.body.dob,contact:req.body.contact},req.body.password);
 
+        res.redirect("/login");
+    }catch(err)
+    {
+        console.log(err);
+        res.redirect("/register");
+       
+    }
+
+});
 router.post("/login",function(req,res)
 {
     const user=new User({
