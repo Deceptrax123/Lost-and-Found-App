@@ -32,6 +32,10 @@ router.get("/:name",async (req,res)=>{
         res.redirect("/users/login");
     }
 });
+//Getting lost item page.
+router.get("/lost",()=>{
+    res.send("Send lost item data here");
+})
 
 //Posting lost item data.
 router.post("/lost",async (req,res)=>{

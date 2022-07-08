@@ -10,18 +10,18 @@ const User=require("../models/users");
 router.use(bodyParser.urlencoded({extended:true}));
 
 
-router.get("/login",function(req,res)
+router.get("/login",(req,res)=>
 {
     res.send("This is the login page");
 });
 
-router.get("/register",function(req,res)
+router.get("/register",(req,res)=>
 {
     res.send("This is the registeration page");
 });
 
 
-router.get("/dashboard",function(req,res)
+router.get("/dashboard",(req,res)=>
 {
     if(req.isAuthenticated())
     {
@@ -33,7 +33,7 @@ router.get("/dashboard",function(req,res)
     }
 })
 
-router.get("/logout",function(req,res)
+router.get("/logout",(req,res)=>
 {
     req.logout(function(err){});
 
@@ -41,7 +41,7 @@ router.get("/logout",function(req,res)
 })
 
 
-router.post("/register",async function(req,res)
+router.post("/register",async (req,res)=>
 {
     try
     {
@@ -58,7 +58,7 @@ router.post("/register",async function(req,res)
 });
 
 
-router.post("/login",async function(req,res)
+router.post("/login",async(req,res)=>
 {
     try{
         const user=await User.findOne({username:req.body.username})
