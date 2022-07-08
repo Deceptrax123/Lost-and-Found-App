@@ -1,9 +1,32 @@
 const mongoose=require('mongoose');
 
 const lostItemSchema=new mongoose.Schema({
-    name:String,
-    category:String,
-    description:String
+    name:{
+        type:String,
+        required:true
+    },
+    category:{
+        type:String,
+        required:true
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    place:{
+        type:String,
+        required:true
+    },
+    date:{
+        type:String,
+        required:true
+    },
+    owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    }
 });
 
-module.exports=lostItemSchema;
+const Item=mongoose.model("Item",lostItemSchema);
+
+module.exports=Item;

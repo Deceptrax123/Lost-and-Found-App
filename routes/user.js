@@ -25,7 +25,7 @@ router.get("/dashboard",function(req,res)
 {
     if(req.isAuthenticated())
     {
-        res.send("Welcome to dashboard")
+        res.send(req.user);
     }
     else
     {

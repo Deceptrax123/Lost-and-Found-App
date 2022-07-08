@@ -26,7 +26,10 @@ const userSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
-    lostItem:lostItemSchema,
+    lostItem:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Item",
+    }]
 })
 
 userSchema.plugin(passportLocalMongoose);
