@@ -1,10 +1,9 @@
 const User=require("../models/users");
-const Item=require("../models/lost_items");
 const router=require("express").Router();
 const passport=require("passport");
 const bodyParser=require("body-parser");
 const lostItem=require("../controller/lostItemData");
-
+const getLostItems=require("../controller/getLostItems");
 
 router.use(bodyParser.urlencoded({ extended:true}));
 
@@ -40,12 +39,19 @@ router.get("/",async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
-            let items=await Item.find({});
+            const items=await getLostItems();
 
-            res.send(items);
+            if(items===0)
+            {
+                res.send("Oops something went wrong");
+            }
+            else
+            {
+                res.send(items);
+            }
         }catch(err)
         {
-            res.send("Oops something went wrong");
+            res.send("Error!!!!");
         }
     }
     else
@@ -56,7 +62,14 @@ router.get("/",async (req,res)=>{
 
 //Get lost item page.
 router.get("/lost",(req,res)=>{
-    res.send("Send lost item data here");
+    if(req.isAuthenticated())
+    {
+        res.send("Lost item page");
+    }
+    else
+    {
+        res.send("/users/login");
+    }
 });
 
 //Post lost item data.
