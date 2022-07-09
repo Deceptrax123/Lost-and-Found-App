@@ -1,14 +1,16 @@
 const User=require("../models/users");
+const Item=require("../models/lost_items");
 const router=require("express").Router();
 const passport=require("passport");
 const bodyParser=require("body-parser");
 const lostItem=require("../controller/lostItemData");
 
+
 router.use(bodyParser.urlencoded({ extended:true}));
 
 
-//Getting details of Users.
-router.get("/:name",async (req,res)=>{
+//Get contact details of users.
+router.get("/contact/:name",async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
@@ -20,7 +22,7 @@ router.get("/:name",async (req,res)=>{
             }
             else
             {
-               res.status(400).send("Oops wrong page");
+               res.status(404).send("Oops wrong page");
             }
         }catch(err)
         {
@@ -32,12 +34,32 @@ router.get("/:name",async (req,res)=>{
         res.redirect("/users/login");
     }
 });
-//Getting lost item page.
-router.get("/lost",()=>{
-    res.send("Send lost item data here");
-})
 
-//Posting lost item data.
+//Get dashboard for list of all lost items.
+router.get("/",async (req,res)=>{
+    if(req.isAuthenticated())
+    {
+        try{
+            let items=await Item.find({});
+
+            res.send(items);
+        }catch(err)
+        {
+            res.send("Oops something went wrong");
+        }
+    }
+    else
+    {
+        res.redirect("/users/login");
+    }
+});
+
+//Get lost item page.
+router.get("/lost",(req,res)=>{
+    res.send("Send lost item data here");
+});
+
+//Post lost item data.
 router.post("/lost",async (req,res)=>{
     if(req.isAuthenticated())
     {

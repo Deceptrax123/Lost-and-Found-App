@@ -21,24 +21,12 @@ router.get("/register",(req,res)=>
 });
 
 
-router.get("/dashboard",(req,res)=>
-{
-    if(req.isAuthenticated())
-    {
-        res.send(req.user);
-    }
-    else
-    {
-        res.redirect("/users/login");
-    }
-})
-
 router.get("/logout",(req,res)=>
 {
     req.logout(function(err){});
 
     res.redirect("/users/register");
-})
+});
 
 
 router.post("/register",async (req,res)=>
@@ -84,5 +72,8 @@ router.post("/login",async(req,res)=>
         console.log(err);
         res.redirect("/users/login");
     }
-})
+});
+
+
+
 module.exports=router;
