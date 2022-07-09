@@ -1,35 +1,18 @@
-
-require("dotenv").config();
-const router=require("express").Router();
-const bodyParser=require("body-parser");
-const passport=require("passport");
 const User=require("../models/users");
+const passport=require("passport");
+const bodyParser=require("body-parser");
 
-
-
-router.use(bodyParser.urlencoded({extended:true}));
-
-
-router.get("/login",(req,res)=>
+const getLogin=(req,res)=>
 {
     res.send("This is the login page");
-});
+};
 
-router.get("/register",(req,res)=>
+const getRegister=(req,res)=>
 {
     res.send("This is the registeration page");
-});
+};
 
-
-router.get("/logout",(req,res)=>
-{
-    req.logout(function(err){});
-
-    res.redirect("/users/register");
-});
-
-
-router.post("/register",async (req,res)=>
+const postRegister=async (req,res)=>
 {
     try
     {
@@ -43,10 +26,9 @@ router.post("/register",async (req,res)=>
        
     }
 
-});
+};
 
-
-router.post("/login",async(req,res)=>
+const postLogin=async(req,res)=>
 {
     try{
         const user=await User.findOne({username:req.body.username})
@@ -72,8 +54,6 @@ router.post("/login",async(req,res)=>
         console.log(err);
         res.redirect("/users/login");
     }
-});
+};
 
-
-
-module.exports=router;
+module.exports={getLogin,getRegister,postRegister,postLogin};

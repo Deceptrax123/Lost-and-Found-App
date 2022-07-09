@@ -1,15 +1,11 @@
+const Item=require("../models/lost_items");
 const User=require("../models/users");
-const router=require("express").Router();
 const passport=require("passport");
 const bodyParser=require("body-parser");
-const lostItem=require("../controller/lostItemData");
-const getLostItems=require("../controller/getLostItems");
+const lostItem=require("../validations/lostItemData");
+const getLostItems=require("../validations/getLostItems");
 
-router.use(bodyParser.urlencoded({ extended:true}));
-
-
-//Get contact details of users.
-router.get("/contact/:name",async (req,res)=>{
+const getContactInfo=async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
@@ -32,10 +28,9 @@ router.get("/contact/:name",async (req,res)=>{
     {
         res.redirect("/users/login");
     }
-});
+};
 
-//Get dashboard for list of all lost items.
-router.get("/",async (req,res)=>{
+const getItems=async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
@@ -58,10 +53,9 @@ router.get("/",async (req,res)=>{
     {
         res.redirect("/users/login");
     }
-});
+};
 
-//Get lost item page.
-router.get("/lost",(req,res)=>{
+const getItemPage=(req,res)=>{
     if(req.isAuthenticated())
     {
         res.send("Lost item page");
@@ -70,10 +64,9 @@ router.get("/lost",(req,res)=>{
     {
         res.send("/users/login");
     }
-});
+};
 
-//Post lost item data.
-router.post("/lost",async (req,res)=>{
+const postItems=async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
@@ -98,8 +91,6 @@ router.post("/lost",async (req,res)=>{
     {
         res.redirect("/users/login");
     }
-});
+};
 
-
-
-module.exports=router;
+module.exports={getContactInfo,getItems,getItemPage,postItems};
