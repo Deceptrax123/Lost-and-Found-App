@@ -1,9 +1,8 @@
 const Item=require("../models/lost_items");
 
-
-const getFoundItem=async (id)=>{
+const getProfile=async(user)=>{
     try{
-        const item=await Item.findOne({_id:id});
+        const item=await Item.find({owner:user._id});
 
         return item;
     }catch(err)
@@ -12,4 +11,4 @@ const getFoundItem=async (id)=>{
     }
 };
 
-module.exports=getFoundItem;
+module.exports=getProfile;

@@ -2,32 +2,29 @@ const Item=require("../models/lost_items");
 const User=require("../models/users");
 const passport=require("passport");
 const bodyParser=require("body-parser");
+const getProfile=require("../helpers/profile");
 const lostItem=require("../helpers/lostItemData");
 const getLostItems=require("../helpers/getLostItems");
+const getFoundItem=require("../helpers/getFoundItemUser");
+const validateDeleteItem=require("../helpers/deleteItem");
 
-const getContactInfo=async (req,res)=>{
-    if(req.isAuthenticated())
-    {
+const profile=async (req,res)=>{
+   if(req.isAuthenticated())
+   {
         try{
-            let user=await User.findOne({username:req.params.name});
+            const user=await User.findOne({username:req.user.username});
+            const items=await getProfile(user);
 
-            if(user)
-            {
-               res.send(user)
-            }
-            else
-            {
-               res.status(404).send("Oops wrong page");
-            }
+            res.send(items);
         }catch(err)
         {
-            res.send("Oops something went wrong");
+           res.send(err);
         }
-    }
-    else
-    {
+   }
+   else
+   {
         res.redirect("/users/login");
-    }
+   }
 };
 
 const getItems=async (req,res)=>{
@@ -93,5 +90,45 @@ const postItems=async (req,res)=>{
     }
 };
 
+const getFoundDetails=async (req,res)=>{
+    if(req.isAuthenticated()){
+        try{
+            const user=await getFoundItem(req.params.id);
+            if(user===0)
+            {
+                res.send("Oops something went wrong");
+            }
+            else
+            {
+                res.send(user);
+            } 
+        }catch(err)
+        {
+            res.send("Error!!!");
+        }
+    }
+    else
+    {
+        res.redirect("/users/login");
+    }
+};
 
-module.exports={getContactInfo,getItems,getItemPage,postItems};
+const deleteItem=async (req,res)=>{
+    if(req.isAuthenticated())
+    {
+        try{
+            let flag=await validateDeleteItem(req.params.id);
+
+            res.send("Item successfully removed");
+        }catch(err)
+        {
+            res.send("Oops something went wrong");
+        }
+
+    }
+    else
+    {
+        res.redirect("/users/login");
+    }
+};
+module.exports={profile,getItems,getItemPage,postItems,getFoundDetails,deleteItem};

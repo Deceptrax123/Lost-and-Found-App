@@ -31,15 +31,19 @@ const postRegister=async (req,res)=>
 const postLogin=async(req,res)=>
 {
     try{
-        const user=await User.findOne({username:req.body.username})
+        const user=await User.findOne({username:req.body.username});
 
         if(user){
             req.login(user,function(err)
             {
                 if(err)
                 {
-                    console.log(err);
+                    
                     res.redirect("/users/login");
+                }
+                else if(!user)
+                {
+                    res.send("Invalid request");
                 }
                 else
                 {

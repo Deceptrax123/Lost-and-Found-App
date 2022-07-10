@@ -2,17 +2,27 @@
 require('dotenv').config();
 const express=require("express");
 const mongoose=require("mongoose");
+const socket=require("socket.io");
 const user=require("./api/user");
 const dashboard=require("./api/dashboard");
+const chat=require("./api/chat");
 const session=require("express-session");
 const passport=require("passport");
-const User=require("./models/users");
+
 
 const passportLocalMongoose=require("passport-local-mongoose");
 
 const app=express();
 
+const server=app.listen(process.env.PORT,function()
+{
+    console.log("Server running on port " + process.env.PORT);
+})
+
+const io=socket(server);
+
 require("./config/db")(mongoose);
+
 
 app.use(session({
     secret:process.env.TOKEN,
@@ -36,7 +46,6 @@ app.get("/",function(req,res)
 app.use("/users",user);
 app.use("/users/dashboard",dashboard);
 
-app.listen(process.env.PORT,function()
-{
-    console.log("Server running on port " + process.env.PORT);
-})
+require("./config/socket")(io);
+app.use("/users/dashboard/chat",chat);
+
