@@ -12,7 +12,7 @@ const passportLocalMongoose=require("passport-local-mongoose");
 
 const app=express();
 
-mongoose.connect(process.env.MONGO_CONNECT,{useNewUrlParser:true});
+require("./config/db")(mongoose);
 
 app.use(session({
     secret:process.env.TOKEN,

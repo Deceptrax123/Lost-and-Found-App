@@ -20,6 +20,8 @@ router.get("/lost",getItemPage);
 //Post lost item data.
 router.post("/lost",postItems);
 
+//Get all details of requested lost item
+router.get("/details/:id");
 
 
 module.exports=router;

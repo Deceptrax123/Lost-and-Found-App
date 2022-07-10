@@ -2,8 +2,8 @@ const Item=require("../models/lost_items");
 const User=require("../models/users");
 const passport=require("passport");
 const bodyParser=require("body-parser");
-const lostItem=require("../validations/lostItemData");
-const getLostItems=require("../validations/getLostItems");
+const lostItem=require("../helpers/lostItemData");
+const getLostItems=require("../helpers/getLostItems");
 
 const getContactInfo=async (req,res)=>{
     if(req.isAuthenticated())
@@ -92,5 +92,6 @@ const postItems=async (req,res)=>{
         res.redirect("/users/login");
     }
 };
+
 
 module.exports={getContactInfo,getItems,getItemPage,postItems};

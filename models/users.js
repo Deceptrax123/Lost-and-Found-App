@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const passportLocalMongoose=require('passport-local-mongoose');
 const Item=require("./lost_items");
-const register=require("../validations/register");
+const register=require("../helpers/register");
 
 const userSchema=new mongoose.Schema({
     username:{
