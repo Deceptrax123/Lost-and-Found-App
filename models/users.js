@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const passportLocalMongoose=require('passport-local-mongoose');
 const Item=require("./lost_items");
-const register=require("../helpers/register");
+const {validateEmail}=require("../helpers/register");
 
 const userSchema=new mongoose.Schema({
     username:{
@@ -12,7 +12,7 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true,
         unique:true,
-        validate:[register,"Enter a valid email address"],
+        validate:[validateEmail,"Enter a valid email address"],
         },
     password:{
         type:String,

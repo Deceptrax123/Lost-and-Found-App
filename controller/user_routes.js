@@ -1,5 +1,7 @@
 const User=require("../models/users");
 const passport=require("passport");
+const {emailUniqueCheck}=require("../helpers/register");
+
 const bodyParser=require("body-parser");
 
 const getLogin=(req,res)=>
@@ -16,16 +18,26 @@ const postRegister=async (req,res)=>
 {
     try
     {
-        await User.register({username: req.body.username,email: req.body.email,dob:req.body.dob,contact:req.body.contact},req.body.password);
+        let val= await emailUniqueCheck(req.body.email,User);
+        if(val===1)
+        {
+            try{
+                await User.register({username: req.body.username,email: req.body.email,dob:req.body.dob,contact:req.body.contact},req.body.password);
 
-        res.redirect("/users/login");
+                res.redirect("/users/login");
+            }catch(err)
+            {
+                res.redirect("/users/register");
+            }
+        }
+        else
+        {
+            res.send("Email already exists.");
+        }
     }catch(err)
     {
-        console.log(err);
-        res.redirect("/users/register");
-       
+       res.send("Error!!!");
     }
-
 };
 
 const postLogin=async(req,res)=>
