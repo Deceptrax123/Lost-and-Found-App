@@ -17,10 +17,6 @@ const userSchema=new mongoose.Schema({
     password:{
         type:String,
     },
-    dob:{
-        type:String,
-        required:true
-    },
     contact:{
         type:String,
         required:true,

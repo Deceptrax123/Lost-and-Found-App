@@ -2,7 +2,7 @@ const User=require("../models/users");
 const passport=require("passport");
 const {emailUniqueCheck}=require("../helpers/register");
 
-const bodyParser=require("body-parser");
+
 
 const getLogin=(req,res)=>
 {
@@ -11,7 +11,7 @@ const getLogin=(req,res)=>
 
 const getRegister=(req,res)=>
 {
-    res.send("This is the registeration page");
+    res.render("register");
 };
 
 const postRegister=async (req,res)=>
@@ -22,7 +22,7 @@ const postRegister=async (req,res)=>
         if(val===1)
         {
             try{
-                await User.register({username: req.body.username,email: req.body.email,dob:req.body.dob,contact:req.body.contact},req.body.password);
+                await User.register({username: req.body.username,email: req.body.email,contact:req.body.contact},req.body.password);
 
                 res.redirect("/users/login");
             }catch(err)

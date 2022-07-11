@@ -8,7 +8,7 @@ const dashboard=require("./api/dashboard");
 const chat=require("./api/chat");
 const session=require("express-session");
 const passport=require("passport");
-
+const ejs=require("ejs");
 
 const passportLocalMongoose=require("passport-local-mongoose");
 
@@ -31,8 +31,11 @@ app.use(session({
     
 }))
 
+app.set("view engine","ejs");
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(express.static("public"));
 
 require("./config/passport")(passport);
 

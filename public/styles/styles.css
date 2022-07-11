@@ -1,0 +1,27 @@
+html
+,body {
+    padding:0;
+    margin:0;
+    background-image: linear-gradient(to bottom,#606eec,#a97cf4,#dc8de7,#e3a4dd);
+}
+
+.navbar{
+    background-color:#606eec;
+    font-family: sans-serif;
+    font:bold;
+}
+.navbar-nav{
+    color:#646dbe;
+}
+.card{
+    opacity:0.6;
+    background-color: #606eec;
+    color:white;
+}
+
+.btn{
+    opacity:0.6;
+    background-color:#5e17eb;
+    color:white;
+    border-color:black;
+}

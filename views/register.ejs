@@ -1,0 +1,62 @@
+<%- include("partials/header"); -%>
+
+<div class="container">
+    <div class="row">
+        <div class="col-1">
+
+        </div>
+        <div class="col-10">
+            <div class="card mt-4 mb-4">
+                <div class="card-header text-center">
+                    <h3>Sign up</h1>
+                </div>
+
+                <form action="/users/register" method="POST">
+                    <div class="container">
+                        <div class="row mb-3">
+                            <div class="col-4 offset-4">
+                                <label for="userName" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="userName" name="username">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4 offset-4 mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4 offset-4 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4 offset-4 mb-3">
+                                <label for="contact" class="form-label">Contact</label>
+                                <input type="tel" class="form-control" id="contact" name="contact">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 offset-4">
+                                <button class="btn btn-secondary" type="submit" name="button">Register</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-1">
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
