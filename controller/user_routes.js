@@ -11,7 +11,7 @@ const getLogin=(req,res)=>
 
 const getRegister=(req,res)=>
 {
-    res.render("register");
+    res.render("register",{message:""});
 };
 
 const postRegister=async (req,res)=>
@@ -24,19 +24,19 @@ const postRegister=async (req,res)=>
             try{
                 await User.register({username: req.body.username,email: req.body.email,contact:req.body.contact},req.body.password);
 
-                res.redirect("/users/login");
+                res.render("register",{message:"Successfully Registered"});
             }catch(err)
             {
-                res.redirect("/users/register");
+                res.render("register",{message:err});
             }
         }
         else
         {
-            res.send("Email already exists.");
+            res.render("Register",{message:"Email already exists. Please enter a valid email"});
         }
     }catch(err)
     {
-       res.send("Error!!!");
+       res.send("Register",{message:"An error has occured. Please try again later"})
     }
 };
 

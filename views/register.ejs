@@ -10,6 +10,17 @@
                 <div class="card-header text-center">
                     <h3>Sign up</h1>
                 </div>
+                
+                
+                <div class="row">
+                    <div class="col-6 offset-3 mt-2 mb-2">
+                        <%if(message.length!=0) {%>
+                            <div class="alert alert-info text-center" role="alert">
+                                <%= message %>
+                            </div>
+                        <%}%>
+                    </div>
+                </div>
 
                 <form action="/users/register" method="POST">
                     <div class="container">
