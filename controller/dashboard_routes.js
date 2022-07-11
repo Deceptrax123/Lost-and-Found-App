@@ -15,10 +15,10 @@ const profile=async (req,res)=>{
             const user=await User.findOne({username:req.user.username});
             const items=await getProfile(user);
 
-            res.send(items);
+            res.render("profile",{user:user});
         }catch(err)
         {
-           res.send(err);
+           res.status(404).send("404 error");
         }
    }
    else

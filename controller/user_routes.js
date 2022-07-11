@@ -73,7 +73,7 @@ const postLogin=async(req,res)=>
         }
         else
         {
-            res.render({message:"Incorrect Username or Password"});
+            res.render("login",{message:"Incorrect Username or Password"});
         }
     }catch(err)
     {
