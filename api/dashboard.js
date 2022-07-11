@@ -21,6 +21,6 @@ router.get("/lost",getItemPage);
 router.post("/lost",postItems);
 
 //Delete lost item once claimed.
-router.delete("/profile/delete/:id",deleteItem)
+router.post("/profile",deleteItem)
 
 module.exports=router;

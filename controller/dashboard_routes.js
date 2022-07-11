@@ -15,7 +15,7 @@ const profile=async (req,res)=>{
             const user=await User.findOne({username:req.user.username});
             const items=await getProfile(user);
 
-            res.render("profile",{user:user});
+            res.render("profile",{user:user,items:items});
         }catch(err)
         {
            res.status(404).send("404 error");
@@ -117,14 +117,13 @@ const deleteItem=async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
-            let flag=await validateDeleteItem(req.params.id);
+            flag=await validateDeleteItem(req.body.button);
 
-            res.send("Item successfully removed");
+            res.redirect("/users/dashboard/profile");
         }catch(err)
         {
             res.send("Oops something went wrong");
         }
-
     }
     else
     {
