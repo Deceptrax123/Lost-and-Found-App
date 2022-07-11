@@ -6,7 +6,7 @@ const {emailUniqueCheck}=require("../helpers/register");
 
 const getLogin=(req,res)=>
 {
-    res.send("This is the login page");
+    res.render("login",{message:""});
 };
 
 const getRegister=(req,res)=>
@@ -44,31 +44,40 @@ const postLogin=async(req,res)=>
 {
     try{
         const user=await User.findOne({username:req.body.username});
-
         if(user){
             req.login(user,function(err)
             {
                 if(err)
                 {
                     
-                    res.redirect("/users/login");
-                }
-                else if(!user)
-                {
-                    res.send("Invalid request");
+                    res.render("login",{message:err});
                 }
                 else
                 {
-                    passport.authenticate("local")(req,res,function(){
-                        res.redirect("/users/dashboard");
-                    })
+                    passport.authenticate("local",function(err,user,info){
+                        if(err)
+                        {
+                            res.render("login",{message:error});
+                        }
+                        else if(!user)
+                        {
+                            res.render("login",{message:"Incorrect username or password"});
+                        }
+                        else
+                        {
+                            res.redirect("/users/dashboard");
+                        }
+                    })(req,res);
                 }
             })
         }
+        else
+        {
+            res.render({message:"Incorrect Username or Password"});
+        }
     }catch(err)
     {
-        console.log(err);
-        res.redirect("/users/login");
+       res.render("login",{message:"User does not exist"});
     }
 };
 
