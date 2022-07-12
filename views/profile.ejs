@@ -1,6 +1,17 @@
 <%- include("partials/header") -%>
 
 <div class="container">
+     
+    <div class="row">
+        <div class="col-6 offset-3 mt-2 mb-2">
+            <%if(message.length!=0) {%>
+                <div class="alert alert-info text-center" role="alert">
+                    <%= message %>
+                </div>
+            <%}%>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-6 offset-3">
             <div class="card mt-5 mb-2">
