@@ -55,11 +55,11 @@ const getItems=async (req,res)=>{
 const getItemPage=(req,res)=>{
     if(req.isAuthenticated())
     {
-        res.send("Lost item page");
+        res.render("report",{message:""});
     }
     else
     {
-        res.send("/users/login");
+        res.redirect("/users/login");
     }
 };
 
@@ -68,20 +68,24 @@ const postItems=async (req,res)=>{
     {
         try{
             let user=await User.findOne({username:req.user.username});
-            
-            let validate=await lostItem(user,req.body.name,req.body.category,req.body.description,req.body.place,req.body.date);
+            try{
+                let validate=await lostItem(user,req.body.name,req.body.category,req.body.description,req.body.place,req.body.date);
 
-            if(validate)
+                if(validate)
+                {
+                    res.render("report",{message:"Item successfully added"});
+                }
+                else
+                {
+                    res.render("report",{message:"There was an error in one or more fields. Try again"});
+                }
+            }catch(err)
             {
-                res.send("Item successfully added");
-            }
-            else
-            {
-                res.send("There was an error. Try again");
+                res.render("report",{message:err});
             }
         }catch(err)
         {
-            res.send("oops something went wrong");
+            res.render("report",{message: "Invalid request"});
         }
     }
     else
@@ -123,10 +127,10 @@ const deleteItem=async (req,res)=>{
             try{
                 const flag=await validateDeleteItem(req.body.button);
                 
-                res.render("delete",{user:user,items:item,message:"Item successfully deleted"})
+                res.render("profile",{user:user,items:item,message:"Item successfully deleted"})
             }catch(err)
             {
-                res.render("delete",{user:user,items:item,message:"Oops something went wrong."})
+                res.render("profile",{user:user,items:item,message:"Oops something went wrong."})
             }
         }catch(err)
         {
