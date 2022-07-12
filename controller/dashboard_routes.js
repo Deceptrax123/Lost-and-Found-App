@@ -122,12 +122,19 @@ const deleteItem=async (req,res)=>{
     {
         try{
             const user=await User.findOne({username:req.user.username});
-            const item=await Item.findOne({_id:req.body.button});
+            const items=await getProfile(user);
 
             try{
                 const flag=await validateDeleteItem(req.body.button);
-                
-                res.render("profile",{user:user,items:item,message:"Item successfully deleted"})
+
+                if(flag)
+                {
+                    res.render("profile",{user:user,items:items,message:"Item successfully deleted"})
+                }
+                else
+                {
+                    res.render("profile",{user:user,items:items,message:"Error in deleting item. Please try again"});
+                }
             }catch(err)
             {
                 res.render("profile",{user:user,items:item,message:"Oops something went wrong."})
