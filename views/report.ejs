@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <form action="/users/dashboard/lost" method="POST">
+                <form action="/users/dashboard/lost" method="POST" enctype="multipart/form-data">
                     <div class="container">
                         <div class="row mt-4">
                             <div class="col-6">
@@ -47,6 +47,13 @@
                             <div class="col-6">
                                 <label for="date" class="form-label">Date of found missing</label>
                                 <input type="date" class="form-control" id="date" name="date">
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6 offset-3">
+                                <label for="image" class="form-label">Image of Item</label>
+                                <input type="file" class="form-control" id="image" name="image">
                             </div>
                         </div>
 

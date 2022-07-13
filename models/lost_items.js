@@ -13,6 +13,10 @@ const lostItemSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    img:{
+        data:Buffer,
+        content:String
+    },          
     place:{
         type:String,
         required:true

@@ -7,6 +7,8 @@ const lostItem=require("../helpers/lostItemData");
 const getLostItems=require("../helpers/getLostItems");
 const getFoundItem=require("../helpers/getFoundItemUser");
 const validateDeleteItem=require("../helpers/deleteItem");
+const fs=require('fs');
+const path=require('path');
 
 const profile=async (req,res)=>{
    if(req.isAuthenticated())
@@ -67,9 +69,20 @@ const postItems=async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
+            console.log(req.file);
+            let img={
+                data:fs.readFileSync(path.join("./public/uploads/"+req.file.filename)),
+                content:"image/png"
+            };
+
+            console.log(img);
             let user=await User.findOne({username:req.user.username});
+
+            
             try{
-                let validate=await lostItem(user,req.body.name,req.body.category,req.body.description,req.body.place,req.body.date);
+               
+
+                let validate=await lostItem(user,req.body.name,req.body.category,img,req.body.description,req.body.place,req.body.date);
 
                 if(validate)
                 {
@@ -137,7 +150,7 @@ const deleteItem=async (req,res)=>{
                 }
             }catch(err)
             {
-                res.render("profile",{user:user,items:item,message:"Oops something went wrong."})
+                res.render("profile",{user:user,items:items,message:"Oops something went wrong."})
             }
         }catch(err)
         {
