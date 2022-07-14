@@ -5,7 +5,7 @@ const getFoundItemUser=async (id)=>{
     try{
         const item=await Item.findOne({_id:id});
 
-        const owner_id=item._id;
+        const owner_id=item.owner;
         try{
             const owner=await User.findOne({_id:owner_id});
 

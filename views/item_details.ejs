@@ -1,0 +1,37 @@
+<%- include("partials/header"); %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-4">
+            <div class="card mt-2">
+                <% type=item.img.content; %>
+                <% data=item.img.data; %>
+                <img src="data:image/<%=type %>;base64,<%= data.toString('base64') %>" class="card-img-top img-fluid img-thumbnail" alt="<%= item.name %>">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6"><p class="fw-bold">Item Name</p></div>
+                        <div class="col-6"><%= item.name %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"><p class="fw-bold">Owner Name</p></div>
+                        <div class="col-6"><%= user %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"><p class="fw-bold">Description</p></div>
+                        <div class="col-6"><%=item.description %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"><p class="fw-bold">Place</p></div>
+                        <div class="col-6"><%=item.place %></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"><p class="fw-bold">Date</p></div>
+                        <div class="col-6"><%=item.date %></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer"); %>

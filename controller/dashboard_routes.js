@@ -5,7 +5,7 @@ const bodyParser=require("body-parser");
 const getProfile=require("../helpers/profile");
 const lostItem=require("../helpers/lostItemData");
 const getLostItems=require("../helpers/getLostItems");
-const getFoundItem=require("../helpers/getFoundItemUser");
+const getFoundItemUser=require("../helpers/getFoundItemUser");
 const validateDeleteItem=require("../helpers/deleteItem");
 const fs=require('fs');
 const path=require('path');
@@ -102,23 +102,25 @@ const postItems=async (req,res)=>{
 const getFoundDetails=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
-            const user=await getFoundItem(req.params.id);
-            if(user===0)
+            const user=await getFoundItemUser(req.params.id);
+            const item=await Item.findOne({_id:req.params.id});
+
+            if(user===0||item===null)
             {
-                res.send("Oops something went wrong");
+                res.redirect("/users/dashboard");
             }
             else
             {
-                res.send(user);
-            } 
+                res.render("item_details",{item:item,user:user});
+            }
         }catch(err)
         {
-            res.send("Error!!!");
+            res.direct("/users/dashboard");
         }
     }
     else
     {
-        res.redirect("/users/login");
+        res.redirect("/users/login"); //handle an error here.
     }
 };
 
@@ -146,7 +148,7 @@ const deleteItem=async (req,res)=>{
             }
         }catch(err)
         {
-            res.redirect("/users/dashboard/profile");
+            res.redirect("/users/dashboard/profile"); //handle an error here.
         }
     }
     else

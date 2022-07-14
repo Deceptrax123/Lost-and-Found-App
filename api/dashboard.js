@@ -3,7 +3,7 @@ const router=require("express").Router();
 const passport=require("passport");
 const bodyParser=require("body-parser");
 const upload=require("../config/upload");
-const {profile,getItems,getItemPage,postItems,deleteItem,search}=require("../controller/dashboard_routes");
+const {profile,getItems,getItemPage,postItems,deleteItem,search,getFoundDetails}=require("../controller/dashboard_routes");
 
 
 
@@ -16,8 +16,11 @@ router.get("/profile",profile);
 //Get dashboard for list of all lost items.
 router.get("/",getItems);
 
-//Get lost item page.
+//Get report lost item form.
 router.get("/lost",getItemPage);
+
+//Get all item details.
+router.get("/:id",getFoundDetails);
 
 //Search by fields.
 router.post("/",search)
