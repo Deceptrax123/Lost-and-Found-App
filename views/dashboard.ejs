@@ -2,12 +2,6 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-6">
-            <h2>Recently Added</h2>
-        </div>
-    </div>
-    
-    <div class="row">
         <% for(let i=0;i<items.length;i++){ %>
             <% let type=items[i].img.content; %>
             <% let data=items[i].img.data; %>
@@ -38,6 +32,59 @@
                 </div>
             </div>
         <%}%>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card mt-2 mb-2">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-2">
+                    <p class="fw-bold">S.No</p>
+                </div>
+                <div class="col-2">
+                   <p class="fw-bold"> Name</p>
+                </div>
+                <div class="col-2">
+                    <p class="fw-bold">Item Id</p>
+                </div>
+                <div class="col-2">
+                    <p class="fw-bold">Category</p>
+                </div>
+                <div class="col-2">
+                    <p class="fw-bold">Details</p>
+                </div>
+                <div class="col-2">
+                    <p class="fw-bold">Contact</p>
+                </div>
+            </div>
+            <hr>
+            <%let i=1 %>
+            <% items.forEach(function(item){ %>
+                <div class="row">
+                    <div class="col-2">
+                        <p><%= i %></p>
+                    </div>
+                    <div class="col-2">
+                        <p><%= item.name %></p>
+                    </div>
+                    <div class="col-2">
+                        <p><%= item.id %></p>
+                    </div>
+                    <div class="col-2">
+                        <p><%= item.category %></p>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn" role="button" href="#">Details</a>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn" role="button" href="#">Contact</a>
+                    </div>
+                </div>
+                <hr>
+                <% i++ %>
+            <%}) %>
+        </div>
     </div>
 </div>
 
