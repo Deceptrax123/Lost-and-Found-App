@@ -39,6 +39,14 @@
     <div class="card mt-2 mb-2">
         <div class="card-body">
             <div class="row">
+                <div class="col-4">
+                    <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal">Filter</button>
+                </div>
+                <div class="col-4">
+                    <a class="btn" href="/users/dashboard">Refresh</a>
+                </div>
+            </div>
+            <div class="row mt-2 ">
                 <div class="col-2">
                     <p class="fw-bold">S.No</p>
                 </div>
@@ -46,7 +54,7 @@
                    <p class="fw-bold"> Name</p>
                 </div>
                 <div class="col-2">
-                    <p class="fw-bold">Item Id</p>
+                    <p class="fw-bold">Date</p>
                 </div>
                 <div class="col-2">
                     <p class="fw-bold">Category</p>
@@ -60,7 +68,7 @@
             </div>
             <hr>
             <%let i=1 %>
-            <% items.forEach(function(item){ %>
+            <% matchedItems.forEach(function(item){ %>
                 <div class="row">
                     <div class="col-2">
                         <p><%= i %></p>
@@ -69,7 +77,7 @@
                         <p><%= item.name %></p>
                     </div>
                     <div class="col-2">
-                        <p><%= item.id %></p>
+                        <p><%= item.date %></p>
                     </div>
                     <div class="col-2">
                         <p><%= item.category %></p>
@@ -84,6 +92,43 @@
                 <hr>
                 <% i++ %>
             <%}) %>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Modal" tabindex="-1" aria-hidden="true" aria-labelledby="title">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">Filter</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <form action="/users/dashboard" method="POST">
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <label for="category" class="form-label">Category</label>
+                                <select class="form-control" id="category" name="category">
+                                    <option selected>Category</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Stationary">Stationary</option>
+                                    <option value="Cosmetics">Cosmetics</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" name="date">
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-primary" type="submit" name="button">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

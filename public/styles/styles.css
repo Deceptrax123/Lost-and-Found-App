@@ -31,4 +31,6 @@ html
     height:15vw;
     object-fit:cover;
 }
-
+.modal{
+    color:black;
+}

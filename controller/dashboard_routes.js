@@ -34,8 +34,7 @@ const getItems=async (req,res)=>{
     {
         try{
             const items=await getLostItems();
-
-            res.render("dashboard",{items:items});
+            res.render("dashboard",{items:items,matchedItems:items});
         }catch(err)
         {
             res.send("Error!!!!");
@@ -135,7 +134,7 @@ const deleteItem=async (req,res)=>{
 
                 if(flag)
                 {
-                    res.render("profile",{user:user,items:items,message:"Item successfully deleted"})
+                    res.redirect("/users/dashboard/profile");
                 }
                 else
                 {
@@ -155,4 +154,42 @@ const deleteItem=async (req,res)=>{
         res.redirect("/users/login");
     }
 };
-module.exports={profile,getItems,getItemPage,postItems,getFoundDetails,deleteItem};
+
+
+const search=async(req,res)=>{
+    const date=req.body.date;
+    const category=req.body.category;
+
+    let matchedItems=[];
+
+    try{
+        let items=await Item.find({});
+
+        if(date!="" && category!="Category")
+        {
+            matchedItems=await Item.find({date:date,category:category});
+        }
+        else if(date==="")
+        {
+            matchedItems=await Item.find({category:category});
+        }
+        else
+        {
+            matchedItems=await Item.find({date:date});
+        }
+
+        if(matchedItems.length!=0)
+        {
+            res.render("dashboard",{items:items,matchedItems:matchedItems});
+        }
+        else
+        {
+            res.redirect("/users/dashboard");
+        }
+    }catch(err)
+    {
+        res.redirect("/users/dashboard");
+    }
+};
+
+module.exports={profile,getItems,getItemPage,postItems,getFoundDetails,deleteItem,search};
