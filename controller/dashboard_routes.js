@@ -35,14 +35,7 @@ const getItems=async (req,res)=>{
         try{
             const items=await getLostItems();
 
-            if(items===0)
-            {
-                res.send("Oops something went wrong");
-            }
-            else
-            {
-                res.send(items);
-            }
+            res.render("dashboard",{items:items});
         }catch(err)
         {
             res.send("Error!!!!");
