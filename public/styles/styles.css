@@ -3,6 +3,7 @@ html
     padding:0;
     margin:0;
     background-image: linear-gradient(to bottom,#606eec,#a97cf4,#dc8de7,#e3a4dd);
+    color:white;
 }
 
 .navbar{

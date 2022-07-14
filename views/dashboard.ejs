@@ -2,6 +2,12 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-6">
+            <h2>Recently Added</h2>
+        </div>
+    </div>
+    
+    <div class="row">
         <% for(let i=0;i<items.length;i++){ %>
             <% let type=items[i].img.content; %>
             <% let data=items[i].img.data; %>
@@ -11,23 +17,22 @@
                     <img src="data:image/<%=type %>;base64,<%= data.toString('base64') %>" class="card-img-top img-fluid img-thumbnail">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-3">Item Name</div>
-                            <div class="col-9"><%= items[i].name %></div>
+                            <div class="col-6">Item Name</div>
+                            <div class="col-6"><%= items[i].name %></div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-3">Last Seen</div>
-                            <div class="col-9"><%= items[i].place %></div>
+                            <div class="col-6">Last Seen</div>
+                            <div class="col-6"><%= items[i].place %></div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-3">Date of Losing</div>
-                            <div class="col-9"><%= items[i].date %></div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-3">Category</div>
-                            <div class="col-9"><%= items[i].category %></div>
+                            <div class="col-6">
+                                <a class="btn btn-primary" role="button" href="#">Details</a>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-primary" role="button" href="#">Contact</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,5 +40,7 @@
         <%}%>
     </div>
 </div>
+
+
 
 <%- include("partials/footer"); -%>
