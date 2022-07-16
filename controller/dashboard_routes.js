@@ -34,7 +34,7 @@ const getItems=async (req,res)=>{
     {
         try{
             const items=await getLostItems();
-            res.render("dashboard",{items:items,matchedItems:items});
+            res.render("dashboard",{items:items,matchedItems:items,username:req.user.username});
         }catch(err)
         {
             res.send("Error!!!!");
@@ -115,7 +115,7 @@ const getFoundDetails=async (req,res)=>{
             }
         }catch(err)
         {
-            res.direct("/users/dashboard");
+            res.redirect("/users/dashboard");
         }
     }
     else
@@ -182,7 +182,7 @@ const search=async(req,res)=>{
 
         if(matchedItems.length!=0)
         {
-            res.render("dashboard",{items:items,matchedItems:matchedItems});
+            res.render("dashboard",{items:items,matchedItems:matchedItems,username:req.user.username});
         }
         else
         {
