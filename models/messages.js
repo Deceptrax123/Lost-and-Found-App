@@ -11,6 +11,10 @@ const messageSchema= new mongoose.Schema({
         required:true
     },
 
+    item_id:{
+        type:mongoose.Schema.Types.ObjectId,
+    },
+
     img:{
         data:Buffer,
         content:String,

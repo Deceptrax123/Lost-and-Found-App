@@ -1,5 +1,6 @@
 
 const saveMessage=require("../helpers/message");
+const Item=require("../models/lost_items");
 const fs=require('fs');
 const path=require('path');
 
@@ -18,19 +19,17 @@ const sendReport=async(req,res)=>{
             content:"image/png"
         };
 
-        const val=await saveMessage(req.params.id,req.body.description,img,req.user.username);
+        const reciever=await Item.findById(req.params.id);
+        const val=await saveMessage(reciever.owner,req.body.description,img,req.user.username,req.params.id);
 
         if(val===1){
-            res.send("message succcesfully sent");
+            res.send("message succcessfully sent");
         }else if(val===0){
-            res.send("User not found")
-        }
-        else
-        {
+            res.send("User not found");
+        }else{
             console.log(err); //handle an error here.
         }
-    }catch(err)
-    {
+    }catch(err){
         console.log(err); //handle error here.
     }
 };

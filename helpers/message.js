@@ -1,12 +1,13 @@
 const Message=require("../models/messages");
 const User=require("../models/users");
 
-const saveMessage=async (reciever,description,img,sender )=>{
+const saveMessage=async (reciever,description,img,sender,itemId )=>{
     try{
         let message=new Message({
             reciever:reciever,
             description:description,
             img:img,
+            item_id:itemId,
             sender:sender,
         });
 
