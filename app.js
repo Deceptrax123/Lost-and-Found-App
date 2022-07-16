@@ -48,7 +48,3 @@ app.get("/",function(req,res)
 
 app.use("/users",user);
 app.use("/users/dashboard",dashboard);
-
-require("./config/socket")(io);
-app.use("/users/dashboard/chat",chat);
-
