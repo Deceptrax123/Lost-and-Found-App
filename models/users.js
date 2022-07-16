@@ -25,6 +25,11 @@ const userSchema=new mongoose.Schema({
     lostItem:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Item",
+    }],
+
+    messages:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
     }]
 })
 

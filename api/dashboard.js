@@ -20,7 +20,7 @@ router.get("/",getItems);
 router.get("/lost",getItemPage);
 
 //Get all item details.
-router.get("/:id",getFoundDetails);
+router.get("/item/:id",getFoundDetails);
 
 //Search by fields.
 router.post("/",search)

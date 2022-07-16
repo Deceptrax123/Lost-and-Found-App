@@ -5,7 +5,7 @@ const mongoose=require("mongoose");
 const socket=require("socket.io");
 const user=require("./api/user");
 const dashboard=require("./api/dashboard");
-const chat=require("./api/chat");
+const retrieve=require("./api/retrieve");
 const session=require("express-session");
 const passport=require("passport");
 const ejs=require("ejs");
@@ -48,3 +48,4 @@ app.get("/",function(req,res)
 
 app.use("/users",user);
 app.use("/users/dashboard",dashboard);
+app.use("/users/dashboard/report",retrieve);
