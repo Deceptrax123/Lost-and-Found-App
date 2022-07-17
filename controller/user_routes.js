@@ -57,7 +57,7 @@ const postLogin=async(req,res)=>
                     passport.authenticate("local",function(err,user,info){
                         if(err)
                         {
-                            res.render("login",{message:error});
+                            res.render("login",{message:err});
                         }
                         else if(!user)
                         {

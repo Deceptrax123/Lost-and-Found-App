@@ -1,14 +1,23 @@
 const Item=require("../models/lost_items");
+const Message=require("../models/messages");
 
-const getProfile=async(user)=>{
+const getProfileItems=async(user)=>{
     try{
-        const item=await Item.find({owner:user._id});
-
-        return item;
-    }catch(err)
-    {
-        return 0;
+        const items=await Item.find({owner:user._id});
+        
+        return items;
+    }catch(err){
+        return err;
     }
 };
 
-module.exports=getProfile;
+const getProfileMessages=async(user)=>{
+    try{
+        const messages=await Message.find({reciever:user._id});
+
+        return messages;
+    }catch(err){
+        return err;
+    }
+};  
+module.exports={getProfileItems,getProfileMessages};

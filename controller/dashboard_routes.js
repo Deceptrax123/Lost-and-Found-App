@@ -1,8 +1,6 @@
 const Item=require("../models/lost_items");
 const User=require("../models/users");
-const passport=require("passport");
-const bodyParser=require("body-parser");
-const getProfile=require("../helpers/profile");
+const {getProfileItems,getProfileMessages}=require("../helpers/profile");
 const lostItem=require("../helpers/lostItemData");
 const getLostItems=require("../helpers/getLostItems");
 const getFoundItemUser=require("../helpers/getFoundItemUser");
@@ -11,22 +9,38 @@ const fs=require('fs');
 const path=require('path');
 
 const profile=async (req,res)=>{
-   if(req.isAuthenticated())
-   {
+    if(req.isAuthenticated()){
         try{
-            const user=await User.findOne({username:req.user.username});
-            const items=await getProfile(user);
+            let user=await User.findOne({username:req.user.username});
+            let items=await getProfileItems(user);
+            let messages=await getProfileMessages(user);
 
-            res.render("profile",{user:user,items:items,message:""});
+            //items validation
+            if(items.length===0){
+                res.write("No items reported lost");
+            }else if(items.length!=0){
+                console.log(items);
+            }else{
+                res.write("error");
+            }
+
+            //messages validation
+            if(messages.length===0){
+                res.write("No messages");
+            }else if(messages.length!=0){
+                console.log(messages);
+            }else{
+                res.write("error");
+            } 
+
+            res.send()
         }catch(err)
         {
-           res.status(404).send("404 error");
+            console.log(err); //handle error here.
         }
-   }
-   else
-   {
+    }else{
         res.redirect("/users/login");
-   }
+    }
 };
 
 const getItems=async (req,res)=>{
@@ -37,7 +51,7 @@ const getItems=async (req,res)=>{
             res.render("dashboard",{items:items,matchedItems:items,username:req.user.username});
         }catch(err)
         {
-            res.send("Error!!!!");
+            res.write("Error!!!!");
         }
     }
     else
@@ -66,16 +80,9 @@ const postItems=async (req,res)=>{
                 data:fs.readFileSync(path.join("./public/uploads/"+req.file.filename)),
                 content:"image/png"
             };
-
-            console.log(img);
             let user=await User.findOne({username:req.user.username});
-
-            
             try{
-               
-
                 let validate=await lostItem(user,req.body.name,req.body.category,img,req.body.description,req.body.place,req.body.date);
-
                 if(validate)
                 {
                     res.render("report",{message:"Item successfully added"});
@@ -88,13 +95,10 @@ const postItems=async (req,res)=>{
             {
                 res.render("report",{message:err});
             }
-        }catch(err)
-        {
+        }catch(err){
             res.render("report",{message: "Invalid request"});
         }
-    }
-    else
-    {
+    }else{
         res.redirect("/users/login");
     }
 };
@@ -105,21 +109,15 @@ const getFoundDetails=async (req,res)=>{
             const user=await getFoundItemUser(req.params.id);
             const item=await Item.findOne({_id:req.params.id});
 
-            if(user===0||item===null)
-            {
+            if(user===0||item===null){
                 res.redirect("/users/dashboard");
-            }
-            else
-            {
+            }else{
                 res.render("item_details",{item:item,user:user});
             }
-        }catch(err)
-        {
+        }catch(err){
             res.redirect("/users/dashboard");
         }
-    }
-    else
-    {
+    }else{
         res.redirect("/users/login"); //handle an error here.
     }
 };
@@ -129,30 +127,23 @@ const deleteItem=async (req,res)=>{
     {
         try{
             const user=await User.findOne({username:req.user.username});
-            const items=await getProfile(user);
+            const items=await getProfileItems(user);
 
             try{
                 const flag=await validateDeleteItem(req.body.button);
 
-                if(flag)
-                {
+                if(flag){
                     res.redirect("/users/dashboard/profile");
-                }
-                else
-                {
+                }else{
                     res.render("profile",{user:user,items:items,message:"Error in deleting item. Please try again"});
                 }
-            }catch(err)
-            {
+            }catch(err){
                 res.render("profile",{user:user,items:items,message:"Oops something went wrong."})
             }
-        }catch(err)
-        {
+        }catch(err){
             res.redirect("/users/dashboard/profile"); //handle an error here.
         }
-    }
-    else
-    {
+    }else{
         res.redirect("/users/login");
     }
 };
@@ -167,29 +158,20 @@ const search=async(req,res)=>{
     try{
         let items=await Item.find({});
 
-        if(date!="" && category!="Category")
-        {
+        if(date!="" && category!="Category"){
             matchedItems=await Item.find({date:date,category:category});
-        }
-        else if(date==="")
-        {
+        }else if(date===""){
             matchedItems=await Item.find({category:category});
-        }
-        else
-        {
+        }else{
             matchedItems=await Item.find({date:date});
         }
 
-        if(matchedItems.length!=0)
-        {
+        if(matchedItems.length!=0){
             res.render("dashboard",{items:items,matchedItems:matchedItems,username:req.user.username});
-        }
-        else
-        {
+        }else{
             res.redirect("/users/dashboard");
         }
-    }catch(err)
-    {
+    }catch(err){
         res.redirect("/users/dashboard");
     }
 };
