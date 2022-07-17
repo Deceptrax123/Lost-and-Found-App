@@ -3,7 +3,7 @@ const mongoose=require("mongoose");
 const messageSchema= new mongoose.Schema({
 
     sender:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
     },
 
     description:{
@@ -23,6 +23,10 @@ const messageSchema= new mongoose.Schema({
     reciever:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
+    },
+
+    type:{
+        type:String,
     }
 });
 

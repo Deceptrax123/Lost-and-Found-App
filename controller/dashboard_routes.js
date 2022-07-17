@@ -83,16 +83,12 @@ const postItems=async (req,res)=>{
             let user=await User.findOne({username:req.user.username});
             try{
                 let validate=await lostItem(user,req.body.name,req.body.category,img,req.body.description,req.body.place,req.body.date);
-                if(validate)
-                {
+                if(validate){
                     res.render("report",{message:"Item successfully added"});
-                }
-                else
-                {
+                }else{
                     res.render("report",{message:"There was an error in one or more fields. Try again"});
                 }
-            }catch(err)
-            {
+            }catch(err){
                 res.render("report",{message:err});
             }
         }catch(err){
