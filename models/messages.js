@@ -24,10 +24,7 @@ const messageSchema= new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
     },
-
-    type:{
-        type:String,
-    }
+    
 });
 
 const Message=mongoose.model("Message",messageSchema);

@@ -4,12 +4,13 @@ const verify=require("../helpers/verify");
 const invalid=require("../helpers/invalid_report");
 const Item=require("../models/lost_items");
 const Message=require("../models/messages");
+const User=require("../models/users");
 const fs=require('fs');
 const path=require('path');
 
 const fileReport=(req,res)=>{
     if(req.isAuthenticated()){
-        res.send("This is the report found item page");
+        res.render("fileReport",{id:req.params.id});
     }else{
         res.redirect("/users/login");
     }
@@ -23,7 +24,8 @@ const sendReport=async(req,res)=>{
         };
 
         const reciever=await Item.findById(req.params.id);
-        const val=await saveMessage(reciever.owner,req.body.description,img,req.user.username,req.params.id);
+        const sender= await User.findOne({username:req.user.username});
+        const val=await saveMessage(reciever.owner,req.body.description,img,sender._id,req.params.id);
 
         if(val===1){
             res.send("message succcessfully sent");
@@ -76,4 +78,6 @@ const invalidReport=async(req,res)=>{
         console.log(err);//handle error here.
     }
 };
+
+
 module.exports={fileReport,sendReport,verifyReport,deleteReport,invalidReport};

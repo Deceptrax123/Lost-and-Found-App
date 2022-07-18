@@ -1,0 +1,39 @@
+<%- include("partials/header"); -%>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card mt-2">
+                <div class="card-header text-center">
+                    <h3>Report item as Found</h3>
+                </div>
+
+                <div class="card-body">
+                    <form action="/users/dashbord/report/<%= id %>" method="post" enctype="multipart/form-data">
+                        <div class="row mt-2">
+                            <div class="col-6 offset-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" name="description"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-6 offset-3">
+                                <label for="image" class="form-label">Image of Item</label>
+                                <input type="file" name="image" id="image" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn" name="button">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer"); -%>
