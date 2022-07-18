@@ -10,7 +10,7 @@ const path=require('path');
 
 const fileReport=(req,res)=>{
     if(req.isAuthenticated()){
-        res.render("fileReport",{id:req.params.id});
+        res.render("fileReport",{id:req.params.id,message:""});
     }else{
         res.redirect("/users/login");
     }
@@ -26,14 +26,17 @@ const sendReport=async(req,res)=>{
         const reciever=await Item.findById(req.params.id);
         const sender= await User.findOne({username:req.user.username});
         const val=await saveMessage(reciever.owner,req.body.description,img,sender._id,req.params.id);
+        let message="";
 
         if(val===1){
-            res.send("message succcessfully sent");
+            message="message successfully sent";
         }else if(val===0){
-            res.send("User not found");
+            message="User not found";
         }else{
-            console.log(err); //handle an error here.
+            message="Oops an error occured, try again later";
         }
+
+        res.render("fileReport",{id:req.params.id,message:message});
     }catch(err){
         console.log(err); //handle error here.
     }
