@@ -2,7 +2,6 @@
 require('dotenv').config();
 const express=require("express");
 const mongoose=require("mongoose");
-const socket=require("socket.io");
 const user=require("./api/user");
 const dashboard=require("./api/dashboard");
 const retrieve=require("./api/retrieve");
@@ -19,10 +18,7 @@ const server=app.listen(process.env.PORT,function()
     console.log("Server running on port " + process.env.PORT);
 })
 
-const io=socket(server);
-
 require("./config/db")(mongoose);
-
 
 app.use(session({
     secret:process.env.TOKEN,
