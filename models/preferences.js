@@ -1,6 +1,11 @@
 const mongoose=require('mongoose');
 
 const preferenceSchema=new mongoose.Schema({
+    item_id:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true
+    },
+    
     deliveryDate:{
         type:String,
         required:true

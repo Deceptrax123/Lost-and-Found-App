@@ -6,8 +6,10 @@ const savePreference=require("../helpers/savePreferences");
 const Item=require("../models/lost_items");
 const Message=require("../models/messages");
 const User=require("../models/users");
+const Preference=require("../models/preferences");
 const fs=require('fs');
 const path=require('path');
+const { useTheme } = require("@react-navigation/native");
 
 const fileReport=(req,res)=>{
     if(req.isAuthenticated()){
@@ -17,9 +19,15 @@ const fileReport=(req,res)=>{
     }
 };
 
-const ongoingSession=(req,res)=>{
+const ongoingSession= async(req,res)=>{
     if(req.isAuthenticated()){
-        res.send("This is an item currently being delivered");
+        const message=await Message.find({item_id:req.params.id});
+        const finder=await User.findById(message.sender);
+
+        const preference=await Preference.find({item_id:req.params.id});
+
+        //render to session page.
+
     }else{
         res.redirect("/users/login");
     }
