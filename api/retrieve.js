@@ -1,5 +1,5 @@
 const router=require("express").Router();
-const {fileReport,ongoingSession,sendReport,verifyReport,invalidReport,deleteReport,preferences}=require("../controller/report_routes");
+const {fileReport,ongoingSession,sendReport,verifyReport,invalidReport,deleteReport,preferences,getMessage}=require("../controller/report_routes");
 const upload=require("../config/upload");
 
 //Get  message page.
@@ -9,13 +9,16 @@ router.get("/:id",fileReport);
 router.post("/:id",upload.single('image'),sendReport);
 
 //Verify report
-router.post("/inbox/verify",verifyReport);
+router.post("/:message_id/verify",verifyReport);
 
 //invalid report
-router.post("/inbox/invalid",invalidReport);
+router.post("/:message_id/invalid",invalidReport);
 
 //delete Report
-router.post("/inbox/delete",deleteReport);
+router.post("/:message_id/delete",deleteReport);
+
+//get a message
+router.get("/message_id",getMessage);
 
 //ongoing status lost item session
 router.get("/session/:id",ongoingSession);

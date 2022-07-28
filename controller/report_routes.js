@@ -9,7 +9,6 @@ const User=require("../models/users");
 const Preference=require("../models/preferences");
 const fs=require('fs');
 const path=require('path');
-const { useTheme } = require("@react-navigation/native");
 
 const fileReport=(req,res)=>{
     if(req.isAuthenticated()){
@@ -28,6 +27,19 @@ const ongoingSession= async(req,res)=>{
 
         //render to session page.
 
+    }else{
+        res.redirect("/users/login");
+    }
+};
+
+const getMessage=async(req,res)=>{
+    if(req.isAuthenticated()){
+        try{
+            const message=await Message.findById(req.params.message_id);
+            res.render("message",{message:message});
+        }catch(err){
+            console.log(err);
+        }
     }else{
         res.redirect("/users/login");
     }
@@ -63,9 +75,9 @@ const verifyReport=async(req,res)=>{
     const val=await verify(req.body.button);
     try{
         if(val===1){
-            res.send("Sender verified");
+            res.send("request verified"); //redirect to current session page.
         }else{
-            res.send("an error has occured");
+            res.redirect("users/dashboard/profile");
         }
     }catch(err){
         console.log(err); //handle error here.
@@ -110,4 +122,4 @@ const preferences=async(req,res)=>{
     }
 };
 
-module.exports={fileReport,ongoingSession,sendReport,verifyReport,deleteReport,invalidReport,preferences};
+module.exports={fileReport,ongoingSession,sendReport,verifyReport,deleteReport,invalidReport,preferences,getMessage};
