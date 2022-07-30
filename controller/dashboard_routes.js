@@ -32,7 +32,9 @@ const getMessages=async (req,res)=>{
 const getSessions=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
-            const user=await User.find({username:req.user.username});
+            const user=await User.findOne({username:req.user.username});
+
+            console.log(user._id);
             const messages=await Message.find({status:"Ongoing",$or:[{reciever:user._id},{sender:user._id}]});
             const items=await getSessionItems(messages);
 

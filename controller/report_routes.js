@@ -72,12 +72,12 @@ const sendReport=async(req,res)=>{
 };
 
 const verifyReport=async(req,res)=>{
-    const val=await verify(req.body.button);
+    const val=await verify(req.body.verify);
     try{
         if(val===1){
             res.send("request verified"); //redirect to current session page.
         }else{
-            res.redirect("users/dashboard/profile");
+            res.redirect("users/dashboard/inbox");
         }
     }catch(err){
         console.log(err); //handle error here.
