@@ -1,10 +1,12 @@
 const Item=require("../models/lost_items");
 const User=require("../models/users");
+const Message=require("../models/messages");
 const {getProfileItems,getProfileMessages}=require("../helpers/profile");
 const lostItem=require("../helpers/lostItemData");
 const getLostItems=require("../helpers/getLostItems");
 const getFoundItemUser=require("../helpers/getFoundItemUser");
 const validateDeleteItem=require("../helpers/deleteItem");
+const getSessionItems=require("../helpers/sessionItems");
 const fs=require('fs');
 const path=require('path');
 
@@ -20,6 +22,22 @@ const getMessages=async (req,res)=>{
             }
         }catch(err)
         {
+            console.log(err); //handle error here.
+        }
+    }else{
+        res.redirect("/users/login");
+    }
+};
+
+const getSessions=async (req,res)=>{
+    if(req.isAuthenticated()){
+        try{
+            const user=await User.find({username:req.user.username});
+            const messages=await Message.find({status:"Ongoing",$or:[{reciever:user._id},{sender:user._id}]});
+            const items=await getSessionItems(messages);
+
+            res.render("session",{sessions:messages,user_id:user._id,items:items});
+        }catch(err){
             console.log(err); //handle error here.
         }
     }else{
@@ -156,4 +174,4 @@ const search=async(req,res)=>{
     }
 };
 
-module.exports={getMessages,getItems,getItemPage,postItems,getFoundDetails,deleteItem,search};
+module.exports={getMessages,getItems,getItemPage,postItems,getFoundDetails,deleteItem,search,getSessions};

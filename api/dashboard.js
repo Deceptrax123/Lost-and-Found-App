@@ -3,7 +3,7 @@ const router=require("express").Router();
 const passport=require("passport");
 const bodyParser=require("body-parser");
 const upload=require("../config/upload");
-const {getMessages,getItems,getItemPage,postItems,deleteItem,search,getFoundDetails}=require("../controller/dashboard_routes");
+const {getMessages,getItems,getItemPage,postItems,deleteItem,search,getFoundDetails,getSessions}=require("../controller/dashboard_routes");
 
 
 
@@ -13,8 +13,11 @@ router.use(bodyParser.json());
 //Get details of user.
 //router.get("/profile",profile);
 
-//get messages and sessions.
+//get messages
 router.get("/inbox",getMessages);
+
+//get current sessions.
+router.get("/sessions",getSessions);
 
 //Get dashboard for list of all lost items.
 router.get("/",getItems);

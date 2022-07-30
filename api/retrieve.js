@@ -2,6 +2,7 @@ const router=require("express").Router();
 const {fileReport,ongoingSession,sendReport,verifyReport,invalidReport,deleteReport,preferences,getMessage}=require("../controller/report_routes");
 const upload=require("../config/upload");
 
+
 //Get  message page.
 router.get("/file/:id",fileReport);
 
@@ -21,7 +22,7 @@ router.post("/:message_id/delete",deleteReport);
 router.get("/:message_id",getMessage);
 
 //ongoing status lost item session
-router.get("/session/:id",ongoingSession);
+router.get("/:message_id/:item_id",ongoingSession);
 
 //post delivery preferences.
 router.post("/session/:id",preferences);

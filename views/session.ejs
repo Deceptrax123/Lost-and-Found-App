@@ -1,0 +1,51 @@
+<%- include("partials/header"); -%>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card mt-2">
+                <% if(sessions.length===0) { %>
+                    <div class="card-header text-center">
+                        <h3>No sessions going on</h3>
+                    </div>
+                <% } else { %>
+                    <div class="card-header text-center">
+                        <h3>Current sessions</h3>
+                    </div>
+                    <div class="card-body">
+                        <%let i=0; %>
+                        <% sessions.forEach(function(session) { %>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><b>Item Name : </b></p>
+                                </div>
+                                <div class="col-9">
+                                    <p><%= items[i] %></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><b>Role : </b></p>
+                                </div>
+                                <div class="col-9">
+                                    <% if(user_id===session.reciever){ %>
+                                        <p>Owner</p>
+                                    <% }else{ %>
+                                        <p>Finder</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <a class="btn btn-primary" role="button" href="/users/dashboard/report/session/<%=session._id %>/<%=session.item_id %>">Main Page</a>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer");  -%>
