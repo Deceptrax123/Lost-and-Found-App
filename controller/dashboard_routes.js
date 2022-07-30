@@ -8,32 +8,16 @@ const validateDeleteItem=require("../helpers/deleteItem");
 const fs=require('fs');
 const path=require('path');
 
-const profile=async (req,res)=>{
+const getMessages=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
             let user=await User.findOne({username:req.user.username});
-            let items=await getProfileItems(user);
             let messages=await getProfileMessages(user);
-
-            //items validation
-            if(items.length===0){
-                res.write("No items reported lost");
-            }else if(items.length!=0){
-                console.log(items);
-            }else{
-                res.write("error");
+            try{
+                res.render("inbox",{messages:messages});
+            }catch(err){
+                console.log(err);//handle error here.
             }
-
-            //messages validation
-            if(messages.length===0){
-                res.write("No messages");
-            }else if(messages.length!=0){
-                console.log(messages);
-            }else{
-                res.write("error");
-            } 
-
-            res.send()
         }catch(err)
         {
             console.log(err); //handle error here.
@@ -172,4 +156,4 @@ const search=async(req,res)=>{
     }
 };
 
-module.exports={profile,getItems,getItemPage,postItems,getFoundDetails,deleteItem,search};
+module.exports={getMessages,getItems,getItemPage,postItems,getFoundDetails,deleteItem,search};

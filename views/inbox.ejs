@@ -1,0 +1,41 @@
+<%- include("partials/header"); -%>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card mt-2">
+                <% if(messages.length===0){ %>
+                    <div class="card-header text-center">
+                        <h3>No messages currently</h3>
+                    </div>
+                <% }else{ %>
+                    <div class="card-header text-center">
+                        <h3>Inbox</h3>
+                    </div>
+                    <div class="card-body">
+                        <% messages.forEach(function(message){ %>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p><%= message.sender %> claims to have found your item</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p><%=message.description %></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <a class="btn btn-primary" role="button" href="/users/dashboard/report/<%= message._id %>">Go to</a>
+                                </div>
+                            </div>
+                            <hr>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer") -%>

@@ -3,10 +3,10 @@ const {fileReport,ongoingSession,sendReport,verifyReport,invalidReport,deleteRep
 const upload=require("../config/upload");
 
 //Get  message page.
-router.get("/:id",fileReport);
+router.get("/file/:id",fileReport);
 
 //post a message.
-router.post("/:id",upload.single('image'),sendReport);
+router.post("/file/:id",upload.single('image'),sendReport);
 
 //Verify report
 router.post("/:message_id/verify",verifyReport);
@@ -18,7 +18,7 @@ router.post("/:message_id/invalid",invalidReport);
 router.post("/:message_id/delete",deleteReport);
 
 //get a message
-router.get("/message_id",getMessage);
+router.get("/:message_id",getMessage);
 
 //ongoing status lost item session
 router.get("/session/:id",ongoingSession);
