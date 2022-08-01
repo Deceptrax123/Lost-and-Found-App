@@ -13,7 +13,7 @@ const getProfileItems=async(user)=>{
 
 const getProfileMessages=async(user)=>{
     try{
-        const messages=await Message.find({reciever:user._id});
+        const messages=await Message.find({reciever:user._id,status:{$ne:"Ongoing"}});
 
         return messages;
     }catch(err){

@@ -18,20 +18,6 @@ const fileReport=(req,res)=>{
     }
 };
 
-const ongoingSession= async(req,res)=>{
-    if(req.isAuthenticated()){
-        const message=await Message.find({item_id:req.params.id});
-        const finder=await User.findById(message.sender);
-
-        const preference=await Preference.find({item_id:req.params.id});
-
-        //render to session page.
-
-    }else{
-        res.redirect("/users/login");
-    }
-};
-
 const getMessage=async(req,res)=>{
     if(req.isAuthenticated()){
         try{
@@ -111,15 +97,5 @@ const invalidReport=async(req,res)=>{
     }
 };
 
-const preferences=async(req,res)=>{
-    try{
-        let flag=await savePreference(req.body.date,req.body.mode,req.body.toTime,req.body.fromTime);
 
-        res.send("Preferences saved.");
-    }catch(err)
-    {
-        res.send(err);//handle error here.
-    }
-};
-
-module.exports={fileReport,ongoingSession,sendReport,verifyReport,deleteReport,invalidReport,preferences,getMessage};
+module.exports={fileReport,sendReport,verifyReport,deleteReport,invalidReport,getMessage};

@@ -5,6 +5,7 @@ const mongoose=require("mongoose");
 const user=require("./api/user");
 const dashboard=require("./api/dashboard");
 const retrieve=require("./api/retrieve");
+const missing=require("./api/session");
 const session=require("express-session");
 const passport=require("passport");
 const ejs=require("ejs");
@@ -45,3 +46,4 @@ app.get("/",function(req,res)
 app.use("/users",user);
 app.use("/users/dashboard",dashboard);
 app.use("/users/dashboard/report",retrieve);
+app.use("/users/dashboard/session",missing);

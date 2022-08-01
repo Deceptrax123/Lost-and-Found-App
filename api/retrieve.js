@@ -24,7 +24,4 @@ router.get("/:message_id",getMessage);
 //ongoing status lost item session
 router.get("/:message_id/:item_id",ongoingSession);
 
-//post delivery preferences.
-router.post("/session/:id",preferences);
-
 module.exports=router;

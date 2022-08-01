@@ -38,7 +38,7 @@ const getSessions=async (req,res)=>{
             const messages=await Message.find({status:"Ongoing",$or:[{reciever:user._id},{sender:user._id}]});
             const items=await getSessionItems(messages);
 
-            res.render("session",{sessions:messages,user_id:user._id,items:items});
+            res.render("list_sessions",{sessions:messages,user_id:user._id,items:items});
         }catch(err){
             console.log(err); //handle error here.
         }
