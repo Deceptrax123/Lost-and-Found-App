@@ -124,8 +124,28 @@
                                 <p><%= preferences.toTime %></p>
                             </div>
                         </div>
+                     <% } %>
+                        <div class="row mt-4">
+                            <div class="col-4">
+                                <form action="users/dashboard/session/<%=session._id %>/<%= session.item_id %>/found" method="POST">
+                                    <button class="btn" type="submit" name="found">Item Recieved</button>
+                                </form>
+                            </div>
+                            <div class="col-4">
+                                <form action="users/dashboard/session/<%= session._id %>/<%= session.item_id %>/not_item" method="POST">
+                                    <button class="btn" type="submit" name="notItem">Not Your Item?</button>
+                                </form>
+                            </div>
+                            <% if(terminate===1) { %>
+                                <div class="col-4">
+                                    <form action="users/dashboard/session/<%= session._id %>/<%= session.item %>/terminate" method="POST">
+                                        <button class="btn" type="submit" name="terminate">End</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
                     </div>
-                <% } %>
+                </div>
             </div>
         </div>
     </div>

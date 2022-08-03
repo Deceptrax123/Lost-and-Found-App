@@ -4,6 +4,7 @@ const Message=require("../models/messages");
 const Preference=require("../models/preferences");
 const Item=require("../models/lost_items");
 
+let terminate=0;
 const getCurrentSession=async(req,res)=>{
   if(req.isAuthenticated()){
     try{
@@ -16,7 +17,7 @@ const getCurrentSession=async(req,res)=>{
             res.send("Invalid request");
         }
         else{
-            res.render("current_session",{session:session,owner:owner,finder:finder,preferences:preference,currentUser:req.user.username});
+            res.render("current_session",{session:session,owner:owner,finder:finder,preferences:preference,currentUser:req.user.username,terminate:terminate});
         }
     }catch(err){
         console.log(err);
@@ -46,7 +47,8 @@ const itemFound=async(req,res)=>{
         }catch(err){
             console.log(err);
         }
-        res.send("Item found");
+        terminate=1;
+        res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
     }catch(err){
         console.log(err);
     }
