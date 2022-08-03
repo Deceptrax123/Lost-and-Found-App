@@ -7,13 +7,16 @@ const Item=require("../models/lost_items");
 const getCurrentSession=async(req,res)=>{
   if(req.isAuthenticated()){
     try{
-        let session=await Message.findbyId(req.params.message_id);
-        let owner=await User.findbyId(session.reciever);
-        let finder=await User.findbyId(session.sender);
+        let session=await Message.findById(req.params.message_id);
+        let owner=await User.findById(session.reciever);
+        let finder=await User.findById(session.sender);
 
         let preference=await Preference.findOne({item_id:req.params.item_id});
         if(owner==null||finder==null||session==null){
             res.send("Invalid request");
+        }
+        else{
+            res.render("current_session",{owner:owner,finder:finder});
         }
     }catch(err){
         console.log(err);

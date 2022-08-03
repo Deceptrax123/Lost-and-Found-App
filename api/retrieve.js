@@ -1,5 +1,5 @@
 const router=require("express").Router();
-const {fileReport,ongoingSession,sendReport,verifyReport,invalidReport,deleteReport,preferences,getMessage}=require("../controller/report_routes");
+const {fileReport,sendReport,verifyReport,invalidReport,deleteReport,getMessage}=require("../controller/report_routes");
 const upload=require("../config/upload");
 
 
@@ -21,7 +21,5 @@ router.post("/:message_id/delete",deleteReport);
 //get a message
 router.get("/:message_id",getMessage);
 
-//ongoing status lost item session
-router.get("/:message_id/:item_id",ongoingSession);
 
 module.exports=router;
