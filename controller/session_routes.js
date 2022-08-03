@@ -16,7 +16,7 @@ const getCurrentSession=async(req,res)=>{
             res.send("Invalid request");
         }
         else{
-            res.render("current_session",{owner:owner,finder:finder});
+            res.render("current_session",{owner:owner,finder:finder,preferences:preference,currentUser:req.user.username});
         }
     }catch(err){
         console.log(err);

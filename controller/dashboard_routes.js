@@ -78,7 +78,7 @@ const postItems=async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
-            console.log(req.file);
+            
             let img={
                 data:fs.readFileSync(path.join("./public/uploads/"+req.file.filename)),
                 content:"image/png"
