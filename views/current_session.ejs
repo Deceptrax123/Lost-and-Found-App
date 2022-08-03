@@ -83,45 +83,45 @@
                     <% if(currentUser===owner.username){ %>
                         <div class="card-body">
                             <div class="col-12 text-center">
-                                <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal">Set Preference</button>
+                                <a href="/users/dashboard/session/<%=session._id %>/<%=session.item_id %>/preference" class="btn" role="button">Set Preference</a>
                             </div>
                         </div>
                     <% } %>
                 <% } else { %>
-                    <div class="card-header">
+                    <div class="card-header text-center">
                         <h3>Preferences</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <p><b>Delivery Date : </b></p>
                             </div>
-                            <div class="col-9">
+                            <div class="col-8">
                                 <p><%= preferences.deliveryDate %></p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <p><b>Instructions : </b></p>
                             </div>
-                            <div class="col-9">
+                            <div class="col-8">
                                 <p><%= preferences.mode %></p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <p><b>From Time : </b></p>
                             </div>
-                            <div class="col-9">
-                                <p><b><%= preferences.fromTime %></p>
+                            <div class="col-8">
+                                <p><%= preferences.fromTime %></p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-4">
                                 <p><b>To Time : </b></p>
                             </div>
-                            <div class="col-9">
-                                <p><b><%= preferences.toTime %></b></p>
+                            <div class="col-8">
+                                <p><%= preferences.toTime %></p>
                             </div>
                         </div>
                     </div>

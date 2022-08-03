@@ -16,7 +16,7 @@ const getCurrentSession=async(req,res)=>{
             res.send("Invalid request");
         }
         else{
-            res.render("current_session",{owner:owner,finder:finder,preferences:preference,currentUser:req.user.username});
+            res.render("current_session",{session:session,owner:owner,finder:finder,preferences:preference,currentUser:req.user.username});
         }
     }catch(err){
         console.log(err);
@@ -26,6 +26,18 @@ const getCurrentSession=async(req,res)=>{
   }
 };
 
+const getPreferencePage=async(req,res)=>{
+    if(req.isAuthenticated()){
+        try{
+            const session=await Message.findById(req.params.message_id);
+            res.render("set_preference",{session:session});
+        }catch(err){
+            console.log(err);
+        }
+    }else{
+        res.redirect("/users/login");
+    }
+};
 const itemFound=async(req,res)=>{
     try{
         const itemStatusChange=await Item.findByIdAndUpdate(req.params.item_id,{status:"Found"});
@@ -59,13 +71,16 @@ const terminateSession=async(req,res)=>{
 
 const preferences=async(req,res)=>{
     try{
-        let flag=await savePreference(req.body.date,req.body.mode,req.body.toTime,req.body.fromTime);
-
-        res.send("Preferences saved.");
+        let flag=await savePreference(req.params.item_id,req.body.date,req.body.mode,req.body.toTime,req.body.fromTime);
+        if(flag===1){
+            res.redirect("/users/session/"+req.params.message_id+"/"+req.params.item_id);
+        }else{
+            res.send("An error has occured")//render error.
+        }
     }catch(err)
     {
-        console.log(err)//handle error here.
+        console.log(err);//handle error here.
     }
 };
 
-module.exports={getCurrentSession,preferences};
+module.exports={getCurrentSession,preferences,getPreferencePage};

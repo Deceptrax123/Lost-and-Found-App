@@ -1,0 +1,44 @@
+<%- include("partials/header"); -%>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card mt-4">
+                <div class="card-header text-center">
+                    <h3>Set Delivery Preferences</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/users/dashboard/session/<%=session._id %>/<%=session.item_id %>/preference %>" method="POST">
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <label for="category" class="form-label">Category</label>
+                                <input type="date" class="form-control" id="category" name="date">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="mode" class="form-label">Instructions</label>
+                                <textarea type="text" class="form-control" id="mode" name="mode"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="from" class="form-label">From Time</label>
+                                <input type="time" class="form-control" id="from" name="fromTime">
+                            </div>
+                            <div class="col-6">
+                                <label for="to" class="form-label">To Time</label>
+                                <input type="time" class="form-control" id="to" name="toTime">
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-primary" type="submit" name="button">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

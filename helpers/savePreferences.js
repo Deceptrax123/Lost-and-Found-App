@@ -4,7 +4,7 @@ const savePreference=async(item_id,date,mode,fromTime,toTime)=>{
     try{
         const preference=new Preference({
             item_id:item_id,
-            date:date,
+            deliveryDate:date,
             mode:mode,
             fromTime:fromTime,
             toTime:toTime,
