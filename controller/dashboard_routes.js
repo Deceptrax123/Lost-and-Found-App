@@ -10,6 +10,8 @@ const getSessionItems=require("../helpers/sessionItems");
 const fs=require('fs');
 const path=require('path');
 
+let message="";
+let matchedItems=[];
 const getMessages=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
@@ -40,6 +42,24 @@ const getSessions=async (req,res)=>{
             res.render("list_sessions",{sessions:messages,user_id:user._id,items:items});
         }catch(err){
             console.log(err); //handle error here.
+        }
+    }else{
+        res.redirect("/users/login");
+    }
+};
+
+const getProfile=async(req,res)=>{
+    if(req.isAuthenticated()){
+        try{
+            const user =await User.findOne({username:req.user.username});
+            try{
+                const items=await getProfileItems(user);   
+                res.render("profile",{user:user,items:items,message:message});
+            }catch(err){
+                console.log(err);
+            }
+        }catch(err){
+            console.log(err);
         }
     }else{
         res.redirect("/users/login");
@@ -122,37 +142,27 @@ const getFoundDetails=async (req,res)=>{
 };
 
 const deleteItem=async (req,res)=>{
-    if(req.isAuthenticated())
-    {
+    if(req.isAuthenticated()) {    
         try{
-            const user=await User.findOne({username:req.user.username});
-            const items=await getProfileItems(user);
-
-            try{
-                const flag=await validateDeleteItem(req.body.button);
-
-                if(flag){
-                    res.redirect("/users/dashboard/profile");
-                }else{
-                    res.render("profile",{user:user,items:items,message:"Error in deleting item. Please try again"});
-                }
-            }catch(err){
-                res.render("profile",{user:user,items:items,message:"Oops something went wrong."})
+            const flag=await validateDeleteItem(req.body.button);
+            if(flag){
+                message="";
+            }else{
+                message="Error in deleting item. Please try again";
             }
+            res.redirect("/users/dashboard/profile");
         }catch(err){
-            res.redirect("/users/dashboard/profile"); //handle an error here.
+            message="Oops something went wrong";
+            res.redirect("/users/dashboard/profile");
         }
     }else{
         res.redirect("/users/login");
     }
 };
 
-
 const search=async(req,res)=>{
     const date=req.body.date;
     const category=req.body.category;
-
-    let matchedItems=[];
 
     try{
         let items=await Item.find({});
@@ -164,15 +174,10 @@ const search=async(req,res)=>{
         }else{
             matchedItems=await Item.find({date:date});
         }
-
-        if(matchedItems.length!=0){
-            res.render("dashboard",{items:items,matchedItems:matchedItems,username:req.user.username});
-        }else{
-            res.redirect("/users/dashboard");
-        }
+        res.redirect("/users/dashboard");
     }catch(err){
         res.redirect("/users/dashboard");
     }
 };
 
-module.exports={getMessages,getItems,getItemPage,postItems,getFoundDetails,deleteItem,search,getSessions};
+module.exports={getMessages,getItems,getItemPage,postItems,getFoundDetails,deleteItem,search,getSessions,getProfile};

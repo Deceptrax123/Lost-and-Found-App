@@ -3,7 +3,7 @@ const router=require("express").Router();
 const passport=require("passport");
 const bodyParser=require("body-parser");
 const upload=require("../config/upload");
-const {getMessages,getItems,getItemPage,postItems,deleteItem,search,getFoundDetails,getSessions}=require("../controller/dashboard_routes");
+const {getMessages,getItems,getItemPage,postItems,deleteItem,search,getFoundDetails,getSessions,getProfile}=require("../controller/dashboard_routes");
 
 
 
@@ -27,6 +27,9 @@ router.get("/lost",getItemPage);
 
 //Get all item details.
 router.get("/item/:id",getFoundDetails);
+
+//get profile
+router.get("/profile",getProfile)
 
 //Search by fields.
 router.post("/",search)
