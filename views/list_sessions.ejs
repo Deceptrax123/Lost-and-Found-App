@@ -28,7 +28,7 @@
                                     <p><b>Role : </b></p>
                                 </div>
                                 <div class="col-9">
-                                    <% if(user_id===session.reciever){ %>
+                                    <% if(user_id.equals(session.reciever)){ %>
                                         <p>Owner</p>
                                     <% }else{ %>
                                         <p>Finder</p>

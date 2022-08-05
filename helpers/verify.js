@@ -1,11 +1,11 @@
 const Item=require("../models/lost_items");
 const Message=require("../models/messages");
 
-const verify=async(id)=>{
+const verify=async(item_id,message_id)=>{
     try{
-        await Item.findByIdAndUpdate(id,{status:"Ongoing"});
+        await Item.findByIdAndUpdate(item_id,{status:"Ongoing"});
         try{
-            await Message.updateOne({item_id:id},{status:"Ongoing"});
+            await Message.findByIdAndUpdate(message_id,{status:"Ongoing"});
         }catch(err)
         {
             return err;

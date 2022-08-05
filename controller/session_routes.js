@@ -43,20 +43,22 @@ const itemFound=async(req,res)=>{
     try{
         const itemStatusChange=await Item.findByIdAndUpdate(req.params.item_id,{status:"Found"});
         try{
-            const messageStatusChange=await Message.findByIdAndUpdate(req.params.message_id,{status:"completed"});
+            const messageStatusChange=await Message.findByIdAndUpdate(req.params.message_id,{status:"Completed"});
+            terminate=1;
         }catch(err){
             console.log(err);
         }
-        terminate=1;
         res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
     }catch(err){
         console.log(err);
     }
 };
 
-const removeItem=async(req,res)=>{
+const updateSessionStatus=async(req,res)=>{
     try{
-        const removeSession=await Message.findByIdAndUpdate(req.params.message_id,{status:""})
+        const removeSession=await Message.findByIdAndUpdate(req.params.message_id,{status:"invalid"})
+        terminate=1;
+        res.redirect("/users/session/"+req.params.message_id+"/"+req.params.item_id);
     }catch(err){
         console.log(err);
     }
@@ -85,4 +87,4 @@ const preferences=async(req,res)=>{
     }
 };
 
-module.exports={getCurrentSession,preferences,getPreferencePage};
+module.exports={getCurrentSession,preferences,getPreferencePage,itemFound,updateSessionStatus,terminateSession};
