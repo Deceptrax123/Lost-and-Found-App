@@ -11,7 +11,6 @@ const fs=require('fs');
 const path=require('path');
 
 let message="";
-let matchedItems=[];
 const getMessages=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
@@ -67,18 +66,15 @@ const getProfile=async(req,res)=>{
 };
 
 const getItems=async (req,res)=>{
-    if(req.isAuthenticated())
-    {
+    if(req.isAuthenticated()){
         try{
             const items=await getLostItems();
             res.render("dashboard",{items:items,matchedItems:items,username:req.user.username});
         }catch(err)
         {
-            res.write("Error!!!!");
+            console.log(err);
         }
-    }
-    else
-    {
+    }else{
         res.redirect("/users/login");
     }
 };
@@ -163,7 +159,7 @@ const deleteItem=async (req,res)=>{
 const search=async(req,res)=>{
     const date=req.body.date;
     const category=req.body.category;
-
+    let matchedItems=[];
     try{
         let items=await Item.find({});
 
@@ -174,7 +170,7 @@ const search=async(req,res)=>{
         }else{
             matchedItems=await Item.find({date:date});
         }
-        res.redirect("/users/dashboard");
+        res.render("dashboard",{items:items,matchedItems:matchedItems,username:req.user.username});
     }catch(err){
         res.redirect("/users/dashboard");
     }
