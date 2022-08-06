@@ -1,9 +1,9 @@
 const Preference=require("../models/preferences");
 
-const savePreference=async(item_id,date,mode,fromTime,toTime)=>{
+const savePreference=async(message_id,date,mode,fromTime,toTime)=>{
     try{
         const preference=new Preference({
-            item_id:item_id,
+            message_id:message_id,
             deliveryDate:date,
             mode:mode,
             fromTime:fromTime,

@@ -9,6 +9,7 @@ const saveMessage=async (reciever,description,img,sender,itemId )=>{
             img:img,
             item_id:itemId,
             sender:sender,
+            status:"Sent",
         });
 
         await message.save();

@@ -22,7 +22,7 @@ const lostItemSchema=new mongoose.Schema({
         required:true
     },
     date:{
-        type:String,
+        type:mongoose.Schema.Types.Date,
         required:true
     },
     status:{

@@ -15,6 +15,7 @@ const addLostItem=async (user,name,cat,img,desc,place,date)=>{
                 place:place,
                 date:date,
                 owner:user,
+                status:"Reported",
             });
 
             await item.save();

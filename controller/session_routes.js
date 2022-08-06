@@ -75,7 +75,7 @@ const terminateSession=async(req,res)=>{
 
 const preferences=async(req,res)=>{
     try{
-        let flag=await savePreference(req.params.item_id,req.body.date,req.body.mode,req.body.toTime,req.body.fromTime);
+        let flag=await savePreference(req.params.message_id,req.body.date,req.body.mode,req.body.toTime,req.body.fromTime);
         if(flag===1){
             res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
         }else{
