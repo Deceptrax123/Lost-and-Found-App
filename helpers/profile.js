@@ -3,8 +3,7 @@ const Message=require("../models/messages");
 
 const getProfileItems=async(user)=>{
     try{
-        const items=await Item.find({owner:user._id});
-        
+        const items=await Item.find({owner:user._id,status:{$ne:"Found"}});
         return items;
     }catch(err){
         return err;

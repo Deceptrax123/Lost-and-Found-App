@@ -61,7 +61,7 @@ const verifyReport=async(req,res)=>{
     const val=await verify(req.body.verify,req.params.message_id);
     try{
         if(val===1){
-            res.send("request verified"); //redirect to current session page.
+            res.redirect("/users/dashboard/sessions/"+req.params.message_id+"/"+req.body.value);
         }else{
             res.redirect("users/dashboard/inbox");
         }
