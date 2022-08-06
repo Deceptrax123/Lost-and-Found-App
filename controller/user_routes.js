@@ -22,7 +22,7 @@ const postRegister=async (req,res)=>
         if(val===1)
         {
             try{
-                await User.register({username: req.body.username,email: req.body.email,contact:req.body.contact},req.body.password);
+                await User.register({username: req.body.username,email: req.body.email,contact:req.body.contact,firstName:req.body.firstName,lastName:req.body.lastName},req.body.password);
 
                 res.render("register",{message:"Successfully Registered"});
             }catch(err)

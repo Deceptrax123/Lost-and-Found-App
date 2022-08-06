@@ -2,98 +2,110 @@
 
 <div class="container">
     <div class="row">
-        <% for(let i=0;i<items.length;i++){ %>
-            <% let type=items[i].img.content; %>
-            <% let data=items[i].img.data; %>
+        <% if(items.length!=0){ %>
+            <% for(let i=0;i<items.length;i++){ %>
+                <% let type=items[i].img.content; %>
+                <% let data=items[i].img.data; %>
 
-            <div class="col-3">
-                <div class="card mt-2 mb-2">
-                    <img src="data:image/<%=type %>;base64,<%= data.toString('base64') %>" class="card-img-top img-fluid img-thumbnail">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">Item Name</div>
-                            <div class="col-6"><%= items[i].name %></div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-6">Last Seen</div>
-                            <div class="col-6"><%= items[i].place %></div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-6">
-                                <a class="btn btn-primary" role="button" href="/users/dashboard/item/<%= items[i]._id %>">Details</a>
+                <div class="col-3">
+                    <div class="card mt-2 mb-2">
+                        <img src="data:image/<%=type %>;base64,<%= data.toString('base64') %>" class="card-img-top img-fluid img-thumbnail">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">Item Name</div>
+                                <div class="col-6"><%= items[i].name %></div>
                             </div>
-                            <div class="col-6">
-                                <a class="btn btn-primary" role="button" href="/users/dashboard/report/file/<%= items[i]._id %>">Contact</a>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">Last Seen</div>
+                                <div class="col-6"><%= items[i].place %></div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <a class="btn btn-primary" role="button" href="/users/dashboard/item/<%= items[i]._id %>">Details</a>
+                                </div>
+                                <div class="col-6">
+                                    <a class="btn btn-primary" role="button" href="/users/dashboard/report/file/<%= items[i]._id %>">Contact</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            <%}%>
+        <% }else { %>
+            <div class="col-6 offset-3">
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3>There are no items reported missing yet</h3>
+                    </div>
+                </div>
             </div>
-        <%}%>
+        <% } %>
     </div>
 </div>
 
 <div class="container">
-    <div class="card mt-2 mb-2">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-4">
-                    <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal">Filter</button>
-                </div>
-                <div class="col-4">
-                    <a class="btn" href="/users/dashboard">Refresh</a>
-                </div>
-            </div>
-            <div class="row mt-2 ">
-                <div class="col-2">
-                    <p class="fw-bold">S.No</p>
-                </div>
-                <div class="col-2">
-                   <p class="fw-bold"> Name</p>
-                </div>
-                <div class="col-2">
-                    <p class="fw-bold">Date</p>
-                </div>
-                <div class="col-2">
-                    <p class="fw-bold">Category</p>
-                </div>
-                <div class="col-2">
-                    <p class="fw-bold">Details</p>
-                </div>
-                <div class="col-2">
-                    <p class="fw-bold">Contact</p>
-                </div>
-            </div>
-            <hr>
-            <%let i=1 %>
-            <% matchedItems.forEach(function(item){ %>
+    <% if(matchedItems.length!=0) { %>
+        <div class="card mt-2 mb-2">
+            <div class="card-body">
                 <div class="row">
+                    <div class="col-4">
+                        <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal">Filter</button>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn" href="/users/dashboard">Refresh</a>
+                    </div>
+                </div>
+                <div class="row mt-2 ">
                     <div class="col-2">
-                        <p><%= i %></p>
+                        <p class="fw-bold">S.No</p>
                     </div>
                     <div class="col-2">
-                        <p><%= item.name %></p>
+                    <p class="fw-bold"> Name</p>
                     </div>
                     <div class="col-2">
-                        <p><%= item.date %></p>
+                        <p class="fw-bold">Date</p>
                     </div>
                     <div class="col-2">
-                        <p><%= item.category %></p>
+                        <p class="fw-bold">Category</p>
                     </div>
                     <div class="col-2">
-                        <a class="btn" role="button" href="/users/dashboard/item/<%= item._id %>">Details</a>
+                        <p class="fw-bold">Details</p>
                     </div>
                     <div class="col-2">
-                        <a class="btn" role="button" href="/users/dashboard/report/file/<%= item._id %>">Contact</a>
+                        <p class="fw-bold">Contact</p>
                     </div>
                 </div>
                 <hr>
-                <% i++ %>
-            <%}) %>
+                <%let i=1 %>
+                <% matchedItems.forEach(function(item){ %>
+                    <div class="row">
+                        <div class="col-2">
+                            <p><%= i %></p>
+                        </div>
+                        <div class="col-2">
+                            <p><%= item.name %></p>
+                        </div>
+                        <div class="col-2">
+                            <p><%= item.date %></p>
+                        </div>
+                        <div class="col-2">
+                            <p><%= item.category %></p>
+                        </div>
+                        <div class="col-2">
+                            <a class="btn" role="button" href="/users/dashboard/item/<%= item._id %>">Details</a>
+                        </div>
+                        <div class="col-2">
+                            <a class="btn" role="button" href="/users/dashboard/report/file/<%= item._id %>">Contact</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <% i++ %>
+                <%}) %>
+            </div>
         </div>
-    </div>
+    <% } %>
 </div>
 
 <div class="modal fade" id="Modal" tabindex="-1" aria-hidden="true" aria-labelledby="title">
