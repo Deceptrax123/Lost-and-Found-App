@@ -15,15 +15,15 @@ const getMessages=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
             let user=await User.findOne({username:req.user.username});
-            let messages=await getProfileMessages(user);
             try{
+                let messages=await getProfileMessages(user);
                 res.render("inbox",{messages:messages});
             }catch(err){
-                console.log(err);//handle error here.
+               res.status(500).send("Internal Server Error");//handle error here.
             }
         }catch(err)
         {
-            console.log(err); //handle error here.
+           res.status(500).send("Internal Server Error"); //handle error here.
         }
     }else{
         res.redirect("/users/login");
@@ -34,13 +34,20 @@ const getSessions=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
             const user=await User.findOne({username:req.user.username});
+            try{
+                const messages=await Message.find({status:"Ongoing",$or:[{reciever:user._id},{sender:user._id}]});
+                try{
+                    const items=await getSessionItems(messages);
 
-            const messages=await Message.find({status:"Ongoing",$or:[{reciever:user._id},{sender:user._id}]});
-            const items=await getSessionItems(messages);
-
-            res.render("list_sessions",{sessions:messages,user_id:user._id,items:items});
+                    res.render("list_sessions",{sessions:messages,user_id:user._id,items:items});
+                }catch(err){
+                   res.status(500).send("Internal Server Error");
+                }
+            }catch(err){
+               res.status(500).send("Internal Server Error");
+            }
         }catch(err){
-            console.log(err); //handle error here.
+           res.status(500).send("Internal Server Error"); //handle error here.
         }
     }else{
         res.redirect("/users/login");
@@ -55,10 +62,10 @@ const getProfile=async(req,res)=>{
                 const items=await getProfileItems(user);   
                 res.render("profile",{user:user,items:items,message:message});
             }catch(err){
-                console.log(err);
+               res.status(500).send("Internal Server Error");
             }
         }catch(err){
-            console.log(err);
+           res.status(500).send("Internal Server Error");
         }
     }else{
         res.redirect("/users/login");
@@ -72,7 +79,7 @@ const getItems=async (req,res)=>{
             res.render("dashboard",{items:items,matchedItems:items,username:req.user.username});
         }catch(err)
         {
-            console.log(err);
+           res.status(500).send("Internal Server Error");
         }
     }else{
         res.redirect("/users/login");
@@ -94,13 +101,12 @@ const postItems=async (req,res)=>{
     if(req.isAuthenticated())
     {
         try{
-            
-            let img={
-                data:fs.readFileSync(path.join("./public/uploads/"+req.file.filename)),
-                content:"image/png"
-            };
             let user=await User.findOne({username:req.user.username});
             try{
+                let img={
+                    data:fs.readFileSync(path.join("./public/uploads/"+req.file.filename)),
+                    content:"image/png"
+                };
                 let validate=await lostItem(user,req.body.name,req.body.category,img,req.body.description,req.body.place,req.body.date);
                 if(validate){
                     res.render("report",{message:"Item successfully added"});
@@ -108,10 +114,10 @@ const postItems=async (req,res)=>{
                     res.render("report",{message:"There was an error in one or more fields. Try again"});
                 }
             }catch(err){
-                res.render("report",{message:err});
+                res.render("report",{message:"Image is required"});
             }
         }catch(err){
-            res.render("report",{message: "Invalid request"});
+          res.status(500).send("Internal Server Error");
         }
     }else{
         res.redirect("/users/login");
@@ -122,12 +128,16 @@ const getFoundDetails=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
             const user=await getFoundItemUser(req.params.id);
-            const item=await Item.findOne({_id:req.params.id});
+            try{
+                const item=await Item.findOne({_id:req.params.id});
 
-            if(user===0||item===null){
-                res.redirect("/users/dashboard");
-            }else{
-                res.render("item_details",{item:item,user:user});
+                if(user===0||item===null){
+                    res.redirect("/users/dashboard");
+                }else{
+                    res.render("item_details",{item:item,user:user});
+                }
+            }catch(err){
+               res.status(500).send("Internal Server Error");
             }
         }catch(err){
             res.redirect("/users/dashboard");
@@ -162,15 +172,18 @@ const search=async(req,res)=>{
     let matchedItems=[];
     try{
         let items=await Item.find({});
-
-        if(date!="" && category!="Category"){
-            matchedItems=await Item.find({date:date,category:category});
-        }else if(date===""){
-            matchedItems=await Item.find({category:category});
-        }else{
-            matchedItems=await Item.find({date:date});
+        try{
+            if(date!="" && category!="Category"){
+                matchedItems=await Item.find({date:date,category:category});
+            }else if(date===""){
+                matchedItems=await Item.find({category:category});
+            }else{
+                matchedItems=await Item.find({date:date});
+            }
+            res.render("dashboard",{items:items,matchedItems:matchedItems,username:req.user.username});
+        }catch(err){
+           res.status(500).send("Internal Server Error");
         }
-        res.render("dashboard",{items:items,matchedItems:matchedItems,username:req.user.username});
     }catch(err){
         res.redirect("/users/dashboard");
     }

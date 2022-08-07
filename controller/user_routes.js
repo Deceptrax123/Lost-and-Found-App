@@ -36,7 +36,7 @@ const postRegister=async (req,res)=>
         }
     }catch(err)
     {
-       res.send("Register",{message:"An error has occured. Please try again later"})
+       res.render("Register",{message:"An error has occured. Please try again later"})
     }
 };
 

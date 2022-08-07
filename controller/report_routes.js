@@ -24,7 +24,7 @@ const getMessage=async(req,res)=>{
             const message=await Message.findById(req.params.message_id);
             res.render("message",{message:message});
         }catch(err){
-            console.log(err);
+           res.status(500).send("Internal Server Error");
         }
     }else{
         res.redirect("/users/login");
@@ -53,7 +53,7 @@ const sendReport=async(req,res)=>{
 
         res.render("fileReport",{id:req.params.id,message:message});
     }catch(err){
-        console.log(err); //handle error here.
+       res.status(500).send("Internal Server Error");
     }
 };
 
@@ -66,20 +66,11 @@ const verifyReport=async(req,res)=>{
             res.redirect("users/dashboard/inbox");
         }
     }catch(err){
-        console.log(err); //handle error here.
+       res.status(500).send("Internal Server Error");
     }
 
 };
 
-const deleteReport=async(req,res)=>{
-    try{
-        await Message.findByIdAndDelete(req.body.button);
-        res.send("Message deleted");
-    }catch(err)
-    {
-        res.send("Oops an error occured.");
-    }
-}
 
 const invalidReport=async(req,res)=>{
     try{
@@ -93,9 +84,9 @@ const invalidReport=async(req,res)=>{
         }
     }catch(err)
     {
-        console.log(err);//handle error here.
+       res.status(500).send("Internal Server Error");
     }
 };
 
 
-module.exports={fileReport,sendReport,verifyReport,deleteReport,invalidReport,getMessage};
+module.exports={fileReport,sendReport,verifyReport,invalidReport,getMessage};

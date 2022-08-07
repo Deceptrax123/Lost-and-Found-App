@@ -14,13 +14,13 @@ const getCurrentSession=async(req,res)=>{
 
         let preference=await Preference.findOne({item_id:req.params.item_id});
         if(owner==null||finder==null||session==null){
-            res.send("Invalid request");
+            res.status(500).send();
         }
         else{
             res.render("current_session",{session:session,owner:owner,finder:finder,preferences:preference,currentUser:req.user.username,terminate:terminate});
         }
     }catch(err){
-        console.log(err);
+        res.status(500).send();
     }
   }else{
     res.redirect("/users/login");
@@ -33,7 +33,7 @@ const getPreferencePage=async(req,res)=>{
             const session=await Message.findById(req.params.message_id);
             res.render("set_preference",{session:session});
         }catch(err){
-            console.log(err);
+            res.status(500).send();
         }
     }else{
         res.redirect("/users/login");
@@ -45,12 +45,12 @@ const itemFound=async(req,res)=>{
         try{
             const messageStatusChange=await Message.findByIdAndUpdate(req.params.message_id,{status:"Completed"});
             terminate=1;
+            res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
         }catch(err){
-            console.log(err);
+            res.status(500).send();
         }
-        res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
     }catch(err){
-        console.log(err);
+        res.status(500).send();
     }
 };
 
@@ -60,7 +60,7 @@ const updateSessionStatus=async(req,res)=>{
         terminate=1;
         res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
     }catch(err){
-        console.log(err);
+        res.status(500).send();
     }
 };
 
@@ -69,7 +69,7 @@ const terminateSession=async(req,res)=>{
         const terminateSession=await Message.findByIdAndDelete(req.params.message_id);
         res.redirect("/users/dashboard/sessions");
     }catch(err){
-        console.log(err);
+        res.status(500).send();
     }
 };
 
@@ -79,11 +79,11 @@ const preferences=async(req,res)=>{
         if(flag===1){
             res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
         }else{
-            res.send("An error has occured")//render error.
+            res.status(500).send();
         }
     }catch(err)
     {
-        console.log(err);//handle error here.
+       res.status(500).send();
     }
 };
 

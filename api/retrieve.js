@@ -1,5 +1,5 @@
 const router=require("express").Router();
-const {fileReport,sendReport,verifyReport,invalidReport,deleteReport,getMessage}=require("../controller/report_routes");
+const {fileReport,sendReport,verifyReport,invalidReport,getMessage}=require("../controller/report_routes");
 const upload=require("../config/upload");
 
 
@@ -14,9 +14,6 @@ router.post("/:message_id/verify",verifyReport);
 
 //invalid report
 router.post("/:message_id/invalid",invalidReport);
-
-//delete Report
-router.post("/:message_id/delete",deleteReport);
 
 //get a message
 router.get("/:message_id",getMessage);
