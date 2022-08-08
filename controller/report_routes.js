@@ -10,6 +10,7 @@ const Preference=require("../models/preferences");
 const fs=require('fs');
 const path=require('path');
 
+let alert="";
 const fileReport=(req,res)=>{
     if(req.isAuthenticated()){
         res.render("fileReport",{id:req.params.id,message:""});
@@ -24,7 +25,7 @@ const getMessage=async(req,res)=>{
             const message=await Message.findById(req.params.message_id);
             try{
                 const sender=await User.findById(message.sender);
-                res.render("message",{message:message,sender:sender});
+                res.render("message",{message:message,sender:sender,alert:alert});
             }catch(err){
                 res.status(500).send("Internal Server Error");
             }
@@ -66,9 +67,9 @@ const verifyReport=async(req,res)=>{
     const val=await verify(req.body.verify,req.params.message_id);
     try{
         if(val===1){
-            res.redirect("/users/dashboard/sessions/"+req.params.message_id+"/"+req.body.verify);
+            res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.body.verify);
         }else{
-            res.redirect("users/dashboard/inbox");
+            res.redirect("/users/dashboard/inbox");
         }
     }catch(err){
        res.status(500).send("Internal Server Error");
@@ -79,14 +80,8 @@ const verifyReport=async(req,res)=>{
 
 const invalidReport=async(req,res)=>{
     try{
-        const sendMessage=await invalid(req.body.button,req.body.reason);
-        
-        if(sendMessage===1) {
-            await Message.findByIdAndRemove(req.body.button);
-            res.send("Request successully removed");
-        } else {
-            res.send("Error, try again later");
-        }
+        await Message.findByIdAndRemove(req.body.button);
+        alert="Finder claim removed successfully"
     }catch(err)
     {
        res.status(500).send("Internal Server Error");

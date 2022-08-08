@@ -4,6 +4,15 @@
     <div class="row">
         <div class="col-6 offset-3">
             <div class="card mt-2">
+                <div class="row">
+                    <div class="col-6 offset-3 mt-2 mb-2">
+                        <%if(alert.length!=0) {%>
+                            <div class="alert alert-info text-center" role="alert">
+                                <%= alert %>
+                            </div>
+                        <%}%>
+                    </div>
+                </div>
                 <div class="card-header text-center">
                     <h3>User id <%= sender.username %> claims to have found your item</h3>
                 </div>
@@ -18,17 +27,14 @@
                             <p><%= message.description %></p>
                         </div>
                     </div>
-
-                    <form action="/users/dashboard/report/<%= message._id %>/verify" method="POST">
-                        <div class="row mt-2">
-                            <div class="col-3 offset-3">
-                                <button class="btn btn-primary" type="submit" name="verify" value="<%= message.item_id %>">Verify</button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal">Invalid</button>
-                            </div>
+                    <div class="row mt-2">
+                        <div class="col-3 offset-3">
+                            <button class="btn" data-bs-toggle="modal" data-bs-target="#Verify">Verify</button>
                         </div>
-                    </form>
+                        <div class="col-3">
+                            <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal">Invalid</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,10 +55,38 @@
                             <p>Do you want to delete the finders claim?</p>
                         </div>
                     </div>
-                    <form action="/users/dashboard" method="POST">
+                    <form action="/users/dashboard/report/<%= message._id %>/invalid" method="POST">
                         <div class="row mt-4">
                             <div class="col-12 text-center">
-                                <button class="btn btn-primary" type="submit" name="button" value="yes">Yes</button>
+                                <button class="btn btn-primary" type="submit" name="button" value="<%= message._id %>">Confirm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Verify" tabindex="-1" aria-hidden="true" aria-labelledby="title">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">Verify</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Do you want to verify the finders claim?</p>
+                        </div>
+                    </div>
+                    <form action="/users/dashboard/report/<%= message._id %>/verify" method="POST">
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-primary" type="submit" name="verify" value="<%= message.item_id %>">Verify</button>
                             </div>
                         </div>
                     </form>

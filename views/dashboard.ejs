@@ -23,12 +23,18 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-6">
-                                    <a class="btn btn-primary" role="button" href="/users/dashboard/item/<%= items[i]._id %>">Details</a>
-                                </div>
-                                <div class="col-6">
-                                    <a class="btn btn-primary" role="button" href="/users/dashboard/report/file/<%= items[i]._id %>">Contact</a>
-                                </div>
+                                <% if(items[i].status==="Reported"){ %>
+                                    <div class="col-6">
+                                        <a class="btn btn-primary" role="button" href="/users/dashboard/item/<%= items[i]._id %>">Details</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a class="btn btn-primary" role="button" href="/users/dashboard/report/file/<%= items[i]._id %>">Contact</a>
+                                    </div>
+                                <% }else{ %>
+                                    <div class="col-12 text-center">
+                                        <a class="btn btn-primary" role="button" href="/users/dashboard/item/<%= items[i]._id %>">Details</a>
+                                    </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
@@ -60,9 +66,6 @@
                 </div>
                 <div class="row mt-2 ">
                     <div class="col-2">
-                        <p class="fw-bold">S.No</p>
-                    </div>
-                    <div class="col-2">
                     <p class="fw-bold"> Name</p>
                     </div>
                     <div class="col-2">
@@ -70,6 +73,9 @@
                     </div>
                     <div class="col-2">
                         <p class="fw-bold">Category</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="fw-bold">Status</p>
                     </div>
                     <div class="col-2">
                         <p class="fw-bold">Details</p>
@@ -83,9 +89,6 @@
                 <% matchedItems.forEach(function(item){ %>
                     <div class="row">
                         <div class="col-2">
-                            <p><%= i %></p>
-                        </div>
-                        <div class="col-2">
                             <p><%= item.name %></p>
                         </div>
                         <div class="col-2">
@@ -95,11 +98,20 @@
                             <p><%= item.category %></p>
                         </div>
                         <div class="col-2">
-                            <a class="btn" role="button" href="/users/dashboard/item/<%= item._id %>">Details</a>
+                            <p><%= item.status %></p>
                         </div>
                         <div class="col-2">
-                            <a class="btn" role="button" href="/users/dashboard/report/file/<%= item._id %>">Contact</a>
+                            <a class="btn" role="button" href="/users/dashboard/item/<%= item._id %>">Details</a>
                         </div>
+                        <% if(item.status==="Reported"){ %>
+                            <div class="col-2">
+                                <a class="btn" role="button" href="/users/dashboard/report/file/<%= item._id %>">Contact</a>
+                            </div>
+                        <% }else{ %>
+                            <div class="col-2">
+                                <p>On Retrieval</p>
+                            </div>
+                        <% } %>
                     </div>
                     <hr>
                     <% i++ %>
