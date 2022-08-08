@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 
 const preferenceSchema=new mongoose.Schema({
-    item_id:{
+    message_id:{
         type:mongoose.Schema.Types.ObjectId,
         required:true
     },

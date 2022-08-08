@@ -12,15 +12,15 @@ const getCurrentSession=async(req,res)=>{
         let owner=await User.findById(session.reciever);
         let finder=await User.findById(session.sender);
 
-        let preference=await Preference.findOne({item_id:req.params.item_id});
+        let preference=await Preference.findOne({message_id:req.params.message_id});
         if(owner==null||finder==null||session==null){
-            res.status(500).send();
+            res.status(500).send("Internal Server Error");
         }
         else{
             res.render("current_session",{session:session,owner:owner,finder:finder,preferences:preference,currentUser:req.user.username,terminate:terminate});
         }
     }catch(err){
-        res.status(500).send();
+        res.status(500).send("Internal Server Error");
     }
   }else{
     res.redirect("/users/login");
@@ -33,7 +33,7 @@ const getPreferencePage=async(req,res)=>{
             const session=await Message.findById(req.params.message_id);
             res.render("set_preference",{session:session});
         }catch(err){
-            res.status(500).send();
+            res.status(500).send("Internal Server Error");
         }
     }else{
         res.redirect("/users/login");
@@ -47,20 +47,25 @@ const itemFound=async(req,res)=>{
             terminate=1;
             res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
         }catch(err){
-            res.status(500).send();
+            res.status(500).send("Internal Server Error");
         }
     }catch(err){
-        res.status(500).send();
+        res.status(500).send("Internal Server Error");
     }
 };
 
 const updateSessionStatus=async(req,res)=>{
     try{
-        const removeSession=await Message.findByIdAndUpdate(req.params.message_id,{status:"Invalid"})
-        terminate=1;
-        res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
+        const itemStatusChange=await Item.findByIdAndUpdate(req.params.item_id,{status:"Reported"});
+        try{
+            const removeSession=await Message.findByIdAndUpdate(req.params.message_id,{status:"Invalid"})
+            terminate=1;
+            res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
+        }catch(err){
+            res.status(500).send("Internal Server Error");
+        }
     }catch(err){
-        res.status(500).send();
+        res.status(500).send("Internal Server Error");
     }
 };
 
@@ -69,7 +74,7 @@ const terminateSession=async(req,res)=>{
         const terminateSession=await Message.findByIdAndDelete(req.params.message_id);
         res.redirect("/users/dashboard/sessions");
     }catch(err){
-        res.status(500).send();
+        res.status(500).send("Internal Server Error");
     }
 };
 
@@ -79,11 +84,11 @@ const preferences=async(req,res)=>{
         if(flag===1){
             res.redirect("/users/dashboard/session/"+req.params.message_id+"/"+req.params.item_id);
         }else{
-            res.status(500).send();
+            res.status(500).send("Internal Server Error");
         }
     }catch(err)
     {
-       res.status(500).send();
+       res.status(500).send("Internal Server Error");
     }
 };
 

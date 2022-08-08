@@ -22,7 +22,12 @@ const getMessage=async(req,res)=>{
     if(req.isAuthenticated()){
         try{
             const message=await Message.findById(req.params.message_id);
-            res.render("message",{message:message});
+            try{
+                const sender=await User.findById(message.sender);
+                res.render("message",{message:message,sender:sender});
+            }catch(err){
+                res.status(500).send("Internal Server Error");
+            }
         }catch(err){
            res.status(500).send("Internal Server Error");
         }
@@ -61,7 +66,7 @@ const verifyReport=async(req,res)=>{
     const val=await verify(req.body.verify,req.params.message_id);
     try{
         if(val===1){
-            res.redirect("/users/dashboard/sessions/"+req.params.message_id+"/"+req.body.value);
+            res.redirect("/users/dashboard/sessions/"+req.params.message_id+"/"+req.body.verify);
         }else{
             res.redirect("users/dashboard/inbox");
         }

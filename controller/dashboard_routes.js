@@ -75,7 +75,7 @@ const getProfile=async(req,res)=>{
 const getItems=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
-            const items=await getLostItems();
+            const items=await Item.find({status:{$ne:"Found"}});
             res.render("dashboard",{items:items,matchedItems:items,username:req.user.username});
         }catch(err)
         {
