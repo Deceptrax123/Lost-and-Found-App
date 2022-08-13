@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-6 offset-3">
-            <div class="card mt-2">
+            <div class="card mt-4">
                 <% if(messages.length===0){ %>
                     <div class="card-header text-center">
                         <h3>No messages currently</h3>
@@ -16,12 +16,12 @@
                         <% messages.forEach(function(message){ %>
                             <div class="row">
                                 <div class="col-12">
-                                    <p><%= message.sender %> claims to have found your item</p>
+                                    <p><b><%= message.sender %> claims to have found your item</b></p>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <p><%=message.description %></p>
+                                    <p><%=(message.description).substring(0,30)+"...." %></p>
                                 </div>
                             </div>
                             <div class="row">

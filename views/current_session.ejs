@@ -126,28 +126,74 @@
                         </div>
                 <% } %>
                         <div class="row mt-4">
-                            <div class="col-4">
-                                <form action="/users/dashboard/session/<%=session._id %>/<%=session.item_id %>/found" method="POST">
-                                    <button class="btn btn-primary" type="submit" name="found" value="null">Item Recieved</button>
-                                </form>
+                            <div class="col-3 offset-3">
+                                <button class="btn" data-bs-toggle="modal" data-bs-target="#Found">Item Recieved</button>
                             </div>
-                            <div class="col-4">
-                                <form action="/users/dashboard/session/<%= session._id %>/<%= session.item_id %>/not_item" method="POST">
-                                    <button class="btn" type="submit" name="notItem">Not Your Item?</button>
-                                </form>
+                            <div class="col-3">
+                                <button class="btn" data-bs-toggle="modal" data-bs-target="#Invalid">Not Your Item?</button>
                             </div>
-                            <% if(terminate===1){ %>
-                                <div class="col-4">
-                                    <form action="/users/dashboard/session/<%= session._id %>/<%= session.item_id %>/terminate" method="POST">
-                                        <button class="btn" type="submit" name="terminate">End</button>
-                                    </form>
-                                </div>
-                            <% } %>
                         </div>
                     </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="Found" tabindex="-1" aria-hidden="true" aria-labelledby="title">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">Invalid</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Have you recieved your item?</p>
+                        </div>
+                    </div>
+                    <form action="/users/dashboard/session/<%= session._id %><%=session.item_id %>/found" method="POST">
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-primary" type="submit" name="button" value="<%= message._id %>">Confirm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="Invalid" tabindex="-1" aria-hidden="true" aria-labelledby="title">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">Accept Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Is the item you recieved not the item you own?</p>
+                        </div>
+                    </div>
+                    <form action="/users/dashboard/session/<%= session._id %><%=session.item_id %>/not_item" method="POST">
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button class="btn btn-primary" type="submit" name="verify" value="<%= message.item_id %>">Confirm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <%- include("partials/footer"); -%>

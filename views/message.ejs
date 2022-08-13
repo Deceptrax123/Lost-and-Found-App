@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-6 offset-3">
-            <div class="card mt-2">
+            <div class="card mt-4">
                 <div class="row">
                     <div class="col-6 offset-3 mt-2 mb-2">
                         <%if(alert.length!=0) {%>
@@ -14,24 +14,42 @@
                     </div>
                 </div>
                 <div class="card-header text-center">
-                    <h3>User id <%= sender.username %> claims to have found your item</h3>
+                    <h3><%= sender.username %> claims to have found your item</h3>
+                </div>
+                <% let type=message.img.content; %>
+                <% let data=message.img.data; %>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h3>Image sent by finder</h3>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <div class="col-6 offset-3">
+                        <img src="data:image/<%=type %>;base64,<%= data.toString('base64') %>" class="card-img-top img-thumbnail">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h3>Message</h3>
+                        <hr>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <% let type=message.img.content; %>
-                    <% let data=message.img.data; %>
                     <div class="row">
-                        <div class="col-3">
-                            <img src="data:image/<%=type %>;base64,<%= data.toString('base64') %>" class="img-fluid img-thumbnail">
-                        </div>
-                        <div class="col-9">
+                        <div class="col-12">
                             <p><%= message.description %></p>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-3 offset-3">
+                    <hr>
+                    <div class="row mb-2">
+                        <div class="col-12 text-center">
                             <button class="btn" data-bs-toggle="modal" data-bs-target="#Verify">Verify</button>
                         </div>
-                        <div class="col-3">
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-12 text-center">
                             <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal">Invalid</button>
                         </div>
                     </div>

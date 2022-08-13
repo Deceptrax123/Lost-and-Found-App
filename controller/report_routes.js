@@ -82,6 +82,7 @@ const invalidReport=async(req,res)=>{
     try{
         await Message.findByIdAndRemove(req.body.button);
         alert="Finder claim removed successfully"
+        res.redirect("/users/dashboard/inbox")
     }catch(err)
     {
        res.status(500).send("Internal Server Error");

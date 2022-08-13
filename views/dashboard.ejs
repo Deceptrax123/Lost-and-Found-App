@@ -23,7 +23,7 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <% if(items[i].status==="Reported"){ %>
+                                <% if(items[i].status==="Reported"&&(!items[i].owner.equals(username))){ %>
                                     <div class="col-6">
                                         <a class="btn btn-primary" role="button" href="/users/dashboard/item/<%= items[i]._id %>">Details</a>
                                     </div>
@@ -104,9 +104,15 @@
                             <a class="btn" role="button" href="/users/dashboard/item/<%= item._id %>">Details</a>
                         </div>
                         <% if(item.status==="Reported"){ %>
-                            <div class="col-2">
-                                <a class="btn" role="button" href="/users/dashboard/report/file/<%= item._id %>">Contact</a>
-                            </div>
+                            <% if(!(item.owner.equals(username))){ %>
+                                <div class="col-2">
+                                    <a class="btn" role="button" href="/users/dashboard/report/file/<%= item._id %>">Contact</a>
+                                </div>
+                            <% }else{ %>
+                                <div class="col-2">
+                                    <button class="btn" data-bs-toggle="modal" data-bs-target="#Alert">Contact</button>
+                                </div>
+                            <% } %>
                         <% }else{ %>
                             <div class="col-2">
                                 <p>On Retrieval</p>
@@ -157,7 +163,20 @@
         </div>
     </div>
 </div>
-
-
+<div class="modal fade" id="Alert" tabindex="-1" aria-hidden="true" aria-labelledby="title">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title">Alert</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <p>You cannot contact yourself!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <%- include("partials/footer"); -%>

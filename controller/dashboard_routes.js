@@ -76,7 +76,7 @@ const getItems=async (req,res)=>{
     if(req.isAuthenticated()){
         try{
             const items=await Item.find({status:{$ne:"Found"}});
-            res.render("dashboard",{items:items,matchedItems:items,username:req.user.username});
+            res.render("dashboard",{items:items,matchedItems:items,username:req.user._id});
         }catch(err)
         {
            res.status(500).send("Internal Server Error");
