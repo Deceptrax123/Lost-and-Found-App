@@ -13,10 +13,11 @@
                         <h3>Inbox</h3>
                     </div>
                     <div class="card-body">
+                        <% let i=0 %>
                         <% messages.forEach(function(message){ %>
                             <div class="row">
                                 <div class="col-12">
-                                    <p><b><%= message.sender %> claims to have found your item</b></p>
+                                    <p><b><%= senders[i] %> claims to have found your item</b></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -30,6 +31,7 @@
                                 </div>
                             </div>
                             <hr>
+                            <% i++ %>
                         <% }) %>
                     </div>
                 <% } %>

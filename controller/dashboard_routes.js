@@ -4,6 +4,7 @@ const Message=require("../models/messages");
 const {getProfileItems,getProfileMessages}=require("../helpers/profile");
 const lostItem=require("../helpers/lostItemData");
 const getLostItems=require("../helpers/getLostItems");
+const getSenders=require("../helpers/senders");
 const getFoundItemUser=require("../helpers/getFoundItemUser");
 const validateDeleteItem=require("../helpers/deleteItem");
 const getSessionItems=require("../helpers/sessionItems");
@@ -17,7 +18,18 @@ const getMessages=async (req,res)=>{
             let user=await User.findOne({username:req.user.username});
             try{
                 let messages=await getProfileMessages(user);
-                res.render("inbox",{messages:messages});
+
+                try{
+                    let senders=await getSenders(messages);
+                    if(senders===0){
+                        res.status(500).send("Internal Server Error");
+                    }else{
+                        res.render("inbox",{messages:messages,senders:senders});
+                    }
+                }catch(err){
+                    res.status(500).send("Internal server error");
+                }
+              
             }catch(err){
                res.status(500).send("Internal Server Error");//handle error here.
             }
