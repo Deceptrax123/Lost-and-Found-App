@@ -36,7 +36,9 @@ app.use(express.static("public"));
 
 require("./config/passport")(passport);
 
-
+app.get("/",(req,res)=>{
+    res.redirect("/users/login");
+})
 
 app.use("/users",user);
 app.use("/users/dashboard",dashboard);
