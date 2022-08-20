@@ -37,11 +37,6 @@ app.use(express.static("public"));
 require("./config/passport")(passport);
 
 
-app.get("/",function(req,res)
-{
-    console.log(req.session.cookie);
-    res.send("Home page");
-});
 
 app.use("/users",user);
 app.use("/users/dashboard",dashboard);
