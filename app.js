@@ -14,10 +14,15 @@ const passportLocalMongoose=require("passport-local-mongoose");
 
 const app=express();
 
-const server=app.listen(process.env.PORT,function()
+let port=process.env.PORT
+
+if(port==null||port==""){
+    port=3000;
+}
+app.listen(port,function()
 {
     console.log("Server running on port " + process.env.PORT);
-})
+});
 
 require("./config/db")(mongoose);
 
