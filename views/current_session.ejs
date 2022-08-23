@@ -5,6 +5,55 @@
         <div class="col-6">
             <div class="card mt-4">
                 <div class="card-header text-center">
+                    <h3>Item Details</h3>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-3">
+                            <p><b>Item Name :</b></p>
+                        </div>
+                        <div class="col-9">
+                            <p><%= item.name %></p>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <p><b>Category :</b></p>
+                        </div>
+                        <div class="col-9">
+                            <p><%= item.category %></p>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <p><b>Missing Date :</b></p>
+                        </div>
+                        <div class="col-9">
+                            <p><%= item.date.toISOString().split('T')[0]  %></p>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <p><b>Status :</b></p>
+                        </div>
+                        <div class="col-9">
+                            <p><%= item.status %></p>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <a class="btn" role="button" href="/users/dashboard/item/<%= item._id %>">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header text-center">
                     <h3>Contact Details</h3>
                 </div>
 
