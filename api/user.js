@@ -1,7 +1,7 @@
 const bodyParser=require("body-parser");
 const router=require("express").Router();
 const passport=require("passport");
-const {getRegister,getLogin,postRegister,postLogin}=require("../controller/user_routes");
+const {getRegister,getLogin,postRegister,postLogin,logOut}=require("../controller/user_routes");
 
 
 router.use(bodyParser.urlencoded({extended:true}));
@@ -17,6 +17,9 @@ router.post("/login",postLogin);
 
 //Post register details.
 router.post("/register",postRegister);
+
+//logout
+router.post("/logout",logOut);
 
 
 

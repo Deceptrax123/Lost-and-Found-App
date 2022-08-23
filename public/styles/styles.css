@@ -10,9 +10,10 @@ html
     background-color:#606eec;
     font-family: sans-serif;
     font:bold;
+    color:white;
 }
 .navbar-nav{
-    color:#646dbe;
+    color:white;
 }
 .card{
     opacity:0.6;

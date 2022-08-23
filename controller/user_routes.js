@@ -81,4 +81,14 @@ const postLogin=async(req,res)=>
     }
 };
 
-module.exports={getLogin,getRegister,postRegister,postLogin};
+const logOut=(req,res)=>{
+   req.logout((err)=>{
+    if(err){
+        res.status(500).send("Internal server error");
+    }else{
+        res.redirect("/users/login");
+    }
+   })
+}
+
+module.exports={getLogin,getRegister,postRegister,postLogin,logOut};
