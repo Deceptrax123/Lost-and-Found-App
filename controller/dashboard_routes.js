@@ -4,7 +4,7 @@ const Message=require("../models/messages");
 const {getProfileItems,getProfileMessages}=require("../helpers/profile");
 const lostItem=require("../helpers/lostItemData");
 const getLostItems=require("../helpers/getLostItems");
-const getSenders=require("../helpers/senders");
+const {getSender,getItemNames}=require("../helpers/inbox_helpers");
 const getFoundItemUser=require("../helpers/getFoundItemUser");
 const validateDeleteItem=require("../helpers/deleteItem");
 const getSessionItems=require("../helpers/sessionItems");
@@ -20,11 +20,20 @@ const getMessages=async (req,res)=>{
                 let messages=await getProfileMessages(user);
 
                 try{
-                    let senders=await getSenders(messages);
+                    let senders=await getSender(messages);
                     if(senders===0){
                         res.status(500).send("Internal Server Error");
                     }else{
-                        res.render("inbox",{messages:messages,senders:senders});
+                        try{
+                            let items=await getItemNames(messages);
+                            if(items===0){
+                                res.status(500).send("Internal Server Error");
+                            }else{
+                                res.render("inbox",{messages:messages,senders:senders,items:items});
+                            }
+                        }catch(err){
+                            res.status(500).send("Internal Server Error");
+                        }
                     }
                 }catch(err){
                     res.status(500).send("Internal server error");
