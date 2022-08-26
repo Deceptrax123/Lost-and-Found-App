@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <hr>
-                <%let i=1 %>
+                <%let i=0 %>
                 <% matchedItems.forEach(function(item){ %>
                     <div class="row">
                         <div class="col-2">
@@ -122,6 +122,24 @@
                     <hr>
                     <% i++ %>
                 <%}) %>
+            </div>
+        </div>
+    <% }else{ %>
+        <div class="card mt-4 mb-2">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <button class="btn" data-bs-toggle="modal" data-bs-target="#Modal">Filter</button>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn" href="/users/dashboard">Refresh</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h3>No Matching Search Result Found</h3>
+                    </div>
+                </div>
             </div>
         </div>
     <% } %>

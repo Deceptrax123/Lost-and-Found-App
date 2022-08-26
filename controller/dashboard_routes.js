@@ -190,16 +190,21 @@ const deleteItem=async (req,res)=>{
 const search=async(req,res)=>{
     const date=req.body.date;
     const category=req.body.category;
+    console.log(category);
+    console.log(date);
     let matchedItems=[];
     try{
-        let items=await Item.find({});
+        let items=await Item.find({status:{$ne:"Found"}});
         try{
             if(date!="" && category!="Category"){
-                matchedItems=await Item.find({date:date,category:category});
-            }else if(date===""){
-                matchedItems=await Item.find({category:category});
+                matchedItems=await Item.find({date:date,category:category,status:{$ne:"Found"}});
+            }else if(date===""&&category!="Category"){
+                matchedItems=await Item.find({category:category,status:{$ne:"Found"}});
+            }else if(date!=""&&category=="Category"){
+                matchedItems=await Item.find({date:date,status:{$ne:"Found"}});
+                console.log(matchedItems);
             }else{
-                matchedItems=await Item.find({date:date});
+                matchedItems=items;
             }
             res.render("dashboard",{items:items,matchedItems:matchedItems,username:req.user.username});
         }catch(err){
