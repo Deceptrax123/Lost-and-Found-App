@@ -189,9 +189,7 @@ const deleteItem=async (req,res)=>{
 
 const search=async(req,res)=>{
     const date=req.body.date;
-    const category=req.body.category;
-    console.log(category);
-    console.log(date);
+    const category=req.body.category
     let matchedItems=[];
     try{
         let items=await Item.find({status:{$ne:"Found"}});
