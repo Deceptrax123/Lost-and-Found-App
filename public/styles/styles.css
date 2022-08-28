@@ -9,22 +9,28 @@ html
 .navbar{
     background-color:#606eec;
     font-family: sans-serif;
-    font:bold;
-    color:white;
+    font:bold; 
 }
-.navbar-nav{
-    color:white;
+.navbar .navbar-brand{
+    color:#f5f3f5;
+    font-size:20px;
+    padding-left:0;
+    
+}
+.navbar .nav-item .nav-link{
+    color:#f5f3f5;
+    font-size:16px;
 }
 .card{
     opacity:0.6;
     background-color: #606eec;
-    color:white;
+    color:#f5f3f5;
 }
 
 .btn{
     opacity:0.6;
     background-color:#5e17eb;
-    color:white;
+    color:#f5f3f5;
     border-color:black;
 }
 .card-img-top{
