@@ -45,31 +45,26 @@ const postLogin=async(req,res)=>
     try{
         const user=await User.findOne({username:req.body.username});
         if(user){
-            req.login(user,function(err)
-            {
+            passport.authenticate("local",function(err,user,info){
                 if(err)
                 {
-                    
                     res.render("login",{message:err});
+                }
+                else if(!user)
+                {
+                    res.render("login",{message:"Incorrect username or password"});
                 }
                 else
                 {
-                    passport.authenticate("local",function(err,user,info){
-                        if(err)
-                        {
+                    req.login(user,(err)=>{
+                        if(err){
                             res.render("login",{message:err});
+                        }else{
+                            res.redirect("/users/dashboard")
                         }
-                        else if(!user)
-                        {
-                            res.render("login",{message:"Incorrect username or password"});
-                        }
-                        else
-                        {
-                            res.redirect("/users/dashboard");
-                        }
-                    })(req,res);
+                    })
                 }
-            })
+            })(req,res);
         }
         else
         {
