@@ -7,7 +7,6 @@ get-it-back makes the task of retrieving lost items easier.
 1. Dashboard listing all lost items
 2. Verification system that ensures no mistakes in item delivery.
 3. Preferences set by owner that allows flexibility in recieving item
-4. User Profile
 
 # Dependencies
 
