@@ -1,6 +1,6 @@
 # Introduction
 
-get-it-back makes the task of retrieving lost items easier.
+The Lost and Found Application makes the task of retrieving lost items easier.
 
 # Features
 
